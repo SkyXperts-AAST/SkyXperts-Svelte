@@ -30,6 +30,35 @@
         onclick={() => (isOpened = !isOpened)}
         expanded={isOpened}
       >
+        {#if isOpened}
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M18 6L6 18M6 6L18 18"
+              stroke="currentColor"
+              stroke-width="3"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        {:else}
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M3 12H21M3 6H21M3 18H21"
+              stroke="currentColor"
+              stroke-width="3"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        {/if}
         {isOpened ? "Close" : "Menu"}
       </Button>
     </div>
@@ -56,6 +85,16 @@
 
       .navRightContainer {
         display: flex;
+
+        :global(.menu-toggle[aria-expanded="false"]) {
+          display: flex;
+          align-items: center;
+        }
+
+        svg {
+          height: 20px;
+          margin-right: 0.3em;
+        }
 
         .navButtons {
           display: flex;
@@ -126,6 +165,8 @@
 
       :global(.menu-toggle[aria-expanded="true"]) {
         margin-bottom: 5em;
+        display: flex;
+        align-items: center;
       }
 
       .navButtons {
