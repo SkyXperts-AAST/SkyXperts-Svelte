@@ -1,5 +1,6 @@
 <script>
   import Button from "./Button.svelte";
+  import src from "$lib/assets/logos/skyxpert-team.jpg";
   import Logo from "$lib/assets/logos/skyxpert-short-logo.png";
   let isOpened = false;
   let navRoutes = [
@@ -24,7 +25,11 @@
           <a class="button" href={route.href}>{route.label}</a>
         {/each}
       </div>
-      <Button onclick={() => (isOpened = !isOpened)} expanded={isOpened}>
+      <Button
+        class="menu-toggle"
+        onclick={() => (isOpened = !isOpened)}
+        expanded={isOpened}
+      >
         {isOpened ? "Close" : "Menu"}
       </Button>
     </div>
@@ -33,6 +38,7 @@
 
 <style>
   .NavBar {
+    /*background-color: red;*/
     display: flex;
     justify-content: center;
     position: fixed;
@@ -46,41 +52,42 @@
       align-items: center;
       position: fixed;
       width: 90%;
+      /*background-color: yellow;*/
 
       .navRightContainer {
         display: flex;
-      }
 
-      .navButtons {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        width: 100%;
-        max-width: 650px;
+        .navButtons {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          width: 100%;
+          max-width: 650px;
 
-        .button {
-          position: relative;
-          margin-right: 1em;
-          color: white;
-          font-family: "Bull", monospace;
-          font-variation-settings: "wght" 220;
-          font-size: 1.2em;
+          .button {
+            position: relative;
+            margin-right: 1em;
+            color: white;
+            font-family: "Bull", monospace;
+            font-variation-settings: "wght" 220;
+            font-size: 1.2em;
 
-          &::after {
-            content: "";
-            position: absolute;
-            bottom: -0.5em;
-            left: 0;
-            height: 2px;
-            width: 100%;
-            background-color: red;
-            transform: scaleX(0);
-            transform-origin: bottom;
-            transition: transform 0.1s ease-in-out;
-          }
+            &::after {
+              content: "";
+              position: absolute;
+              bottom: -0.5em;
+              left: 0;
+              height: 2px;
+              width: 100%;
+              background-color: red;
+              transform: scaleX(0);
+              transform-origin: bottom;
+              transition: transform 0.1s ease-in-out;
+            }
 
-          &:hover::after {
-            transform: scaleX(1);
+            &:hover::after {
+              transform: scaleX(1);
+            }
           }
         }
       }
@@ -92,12 +99,14 @@
   }
 
   .NavBar.opened {
-    background-image: linear-gradient(
-      140deg,
-      rgba(0, 0, 0, 0.6) 35%,
-      rgba(52, 50, 202, 0.7) 100%
-    );
+    height: 100%;
+    backdrop-filter: blur(15px);
+    background:
+      linear-gradient(0deg, rgba(0, 26, 48, 0.8) 0%, rgba(0, 26, 48, 0.8) 100%),
+      url("https://skyxperts-aast.github.io/Official-Website/assets/imgs/team-imgs/events/alamein-airshow/skyxpert-team.jpg")
+        center/cover;
     margin: 0;
+
     .navContainer {
       display: flex;
       flex-direction: column;
@@ -114,31 +123,31 @@
       justify-content: space-between;
       align-items: center;
       height: 100vh;
-    }
 
-    button {
-      position: absolute;
-    }
+      :global(.menu-toggle[aria-expanded="true"]) {
+        margin-bottom: 5em;
+      }
 
-    .navButtons {
-      display: flex;
-      align-items: center;
-      flex-direction: column;
-      justify-content: space-evenly;
-      height: 100%;
-      font-size: 2em;
-
-      .button {
-        margin: 0;
+      .navButtons {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        justify-content: space-evenly;
+        height: 100%;
         font-size: 2em;
-        color: rgba(255, 255, 255, 0.6);
 
-        &::after {
-          bottom: -0.2em;
-        }
+        .button {
+          margin: 0;
+          font-size: 2em;
+          color: rgba(255, 255, 255, 0.6);
 
-        &:hover {
-          color: white;
+          &::after {
+            bottom: -0.2em;
+          }
+
+          &:hover {
+            color: white;
+          }
         }
       }
     }
