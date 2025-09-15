@@ -1,4 +1,5 @@
 <script>
+  import { base } from "$app/paths";
   import Button from "./Button.svelte";
   import Logo from "$lib/assets/logos/skyxpert-short-logo.png";
   let isOpened = false;
@@ -9,18 +10,29 @@
     { label: "Next Steps", href: "#updates" },
     { label: "Contact Us", href: "#contactus" },
   ];
+
+  const withBase = (h) => {
+    if (!h) return base;
+    if (h.startsWith("http")) return h; // external
+    if (h.startsWith("#")) return `${base}/${h}`; // anchor on homepage
+    return `${base}${h.startsWith("/") ? "" : "/"}${h}`;
+  };
 </script>
 
 <div class={isOpened ? "NavBar opened" : "NavBar"}>
   <div class="navContainer">
-    <a href="/">
+    <a href="${base}/">
       <img src={Logo} alt="Logo" class="logo" />
     </a>
 
     <div class="navRightContainer">
       <div class="navButtons">
         {#each navRoutes as route}
-          <a class="button" href={route.href}>{route.label}</a>
+          <a
+            class="btn"
+            href={withBase(route.href)}
+            on:click={() => (isOpened = false)}>{route.label}</a
+          >
         {/each}
       </div>
 
