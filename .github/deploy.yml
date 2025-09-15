@@ -1,0 +1,50 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: ["main"] # use an array
+  workflow_dispatch:
+
+jobs:
+  build_site:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci # prefer ci on CI for reproducible installs
+
+      - name: Build
+        env:
+          BASE_PATH: "/${{ github.event.repository.name }}" # -> "/SkyXperts-Svelte"
+        run: |
+          npm run build
+          # Needed because SvelteKit outputs "_app/*" and Pages uses Jekyll by default
+          touch build/.nojekyll
+
+      - name: Upload Artifacts
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # must match your adapter-static output dir
+          path: build/
+
+  deploy:
+    needs: build_site
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v4
