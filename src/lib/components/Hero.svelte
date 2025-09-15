@@ -1,5 +1,6 @@
 <script>
-  import { onMount, onDestroy } from "svelte";
+  import { onMount } from "svelte";
+  import { browser } from "$app/environment";
 
   export let title;
   export let subtitle = "";
@@ -20,15 +21,15 @@
   }
 
   onMount(() => {
+    if (!browser) return;
     update();
     window.addEventListener("scroll", update, { passive: true });
     window.addEventListener("resize", update);
+    return () => {
+      window.removeEventListener("scroll", update);
+      window.removeEventListener("resize", update);
+    };
   });
-  onDestroy(() => {
-    window.removeEventListener("scroll", update);
-    window.removeEventListener("resize", update);
-  });
-
   $: bgTranslate = `translate3d(0, ${y * parallaxBg}px, 0)`;
   $: textTranslate = `translate3d(0, ${y * parallaxText}px, 0)`;
 </script>

@@ -12,7 +12,7 @@
     "check:watch": "svelte-kit sync && svelte-check --tsconfig ./jsconfig.json --watch",
     "format": "prettier --write .",
     "lint": "prettier --check . && eslint .",
-    "deploy": "npm run build && npx gh-pages -d build -t true"
+    "gh-pages": "npm run build && npx gh-pages -d build"
   },
   "devDependencies": {
     "@eslint/compat": "^1.2.5",
