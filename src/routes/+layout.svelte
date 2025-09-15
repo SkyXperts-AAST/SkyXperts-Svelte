@@ -1,5 +1,5 @@
 <script>
-  import favicon from "$lib/assets/favicon.svg";
+  import favicon from "$lib/assets/logos/favicon.png";
   import NavBar from "$lib/components/NavBar.svelte";
 
   let { children } = $props();
