@@ -6,6 +6,7 @@
   export let subtitle = "";
   export let bg; // background image URL or import
   export let bgAlt = "background";
+  export let fontSize = "14em"; // default
 
   // parallax factors
   export let parallaxBg = 0.3; // background moves slower
@@ -34,16 +35,18 @@
   $: textTranslate = `translate3d(0, ${y * parallaxText}px, 0)`;
 </script>
 
-<div class="title" bind:this={sectionEl}>
+<div class="title" style="--hero-font-size: {fontSize}" bind:this={sectionEl}>
   <div class="bg" style="transform:{bgTranslate}">
     {#if bg}
       <img src={bg} alt={bgAlt} />
     {/if}
   </div>
 
-  <h1 style="transform:{textTranslate}">{title}</h1>
+  <h1 style="transform:{textTranslate}">
+    {@html title}
+  </h1>
   {#if subtitle}
-    <h1 style="transform:{textTranslate}">{subtitle}</h1>
+    <h1 style="transform:{textTranslate}">{@html subtitle}</h1>
   {/if}
 </div>
 
@@ -95,7 +98,7 @@
     width: 105%;
     height: 100%;
     object-fit: cover;
-    object-position: 50% 60%;
+    object-position: 50% 70%;
     z-index: 0;
   }
 
@@ -106,9 +109,10 @@
     font-family: "Bull", monospace;
     font-variation-settings: "wght" 180;
     margin: 0;
-    bottom: -1.3em;
-    font-size: 13em;
+    bottom: -1em;
+    font-size: var(--hero-font-size, 14em);
     line-height: 1em;
     margin-left: 0.5em;
+    text-shadow: rgba(0, 0, 0, 0.7) 0px 20px 30px;
   }
 </style>
