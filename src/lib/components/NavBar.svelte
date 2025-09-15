@@ -29,7 +29,7 @@
       <div class="navButtons">
         {#each navRoutes as route}
           <a
-            class="btn"
+            class="button"
             href={withBase(route.href)}
             on:click={() => (isOpened = false)}>{route.label}</a
           >
