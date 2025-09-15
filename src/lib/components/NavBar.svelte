@@ -3,9 +3,9 @@
   import Logo from "$lib/assets/logos/skyxpert-short-logo.png";
   let isOpened = false;
   let navRoutes = [
-    { label: "Team", href: "#team" },
-    { label: "Drones", href: "#drone" },
-    { label: "Partnerships", href: "#sponsors" },
+    { label: "Team", href: "/team" },
+    { label: "Drones", href: "/drones" },
+    { label: "Partnerships", href: "/partnerships" },
     { label: "Next Steps", href: "#updates" },
     { label: "Contact Us", href: "#contactus" },
   ];
@@ -130,10 +130,11 @@
   .NavBar.opened {
     height: 100%;
     backdrop-filter: blur(15px);
-    background:
-      linear-gradient(0deg, rgba(0, 26, 48, 0.8) 0%, rgba(0, 26, 48, 0.8) 100%),
-      url("https://skyxperts-aast.github.io/Official-Website/assets/imgs/team-imgs/events/alamein-airshow/skyxpert-team.jpg")
-        center/cover;
+    background: linear-gradient(
+      0deg,
+      rgba(0, 26, 48, 0.8) 0%,
+      rgba(0, 26, 48, 0.8) 100%
+    );
     margin: 0;
 
     .navContainer {
