@@ -4,13 +4,14 @@
 </script>
 
 <Hero
-  title={`Sky<span style="color:red">X</span>perts`}
+  title={'Sky<span style="color:red">X</span>perts'}
   subtitle="UAVs Club"
   bg={teamBg}
   parallaxBg={0.5}
   parallaxText={-0.12}
 />
 
+<section>HIII</section>
 <section>HIII</section>
 
 <style>

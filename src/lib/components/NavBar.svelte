@@ -2,13 +2,7 @@
   import Button from "./Button.svelte";
   import Logo from "$lib/assets/logos/skyxpert-short-logo.png";
   let isOpened = false;
-  let navRoutes = [
-    { label: "Team", href: "/team" },
-    { label: "Drones", href: "/drones" },
-    { label: "Partnerships", href: "/partnerships" },
-    { label: "Next Steps", href: "#updates" },
-    { label: "Contact Us", href: "#contactus" },
-  ];
+  import navRoutes from "$lib/navRoutes.js";
 </script>
 
 <div class={isOpened ? "NavBar opened" : "NavBar"}>
@@ -16,7 +10,6 @@
     <a href="/">
       <img src={Logo} alt="Logo" class="logo" />
     </a>
-
     <div class="navRightContainer">
       <div class="navButtons">
         {#each navRoutes as route}
