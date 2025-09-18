@@ -100,7 +100,11 @@
           <div class="head-card">
             <img src={head.src} alt={head.name} />
           </div>
-          <p>{head.name}</p>
+          <ul>
+            <li>{head.name}</li>
+            <li>{head.title}</li>
+            <li>{head.department}</li>
+          </ul>
         </span>
       {/each}
     </div>
@@ -111,7 +115,11 @@
           <div class="head-card">
             <img src={member.src} alt={member.name} />
           </div>
-          <p>{member.name}</p>
+          <ul>
+            <li>{member.name}</li>
+            <li>{member.title}</li>
+            <!-- <li>{member.department}</li> -->
+          </ul>
         </span>
       {/each}
     </div>
@@ -252,7 +260,7 @@
   .current {
     position: absolute;
     z-index: 1;
-    top: 28rem; /* pushes it down from the top */
+    top: 24rem; /* pushes it down from the top */
     left: 50%; /* centers horizontally */
     transform: translateX(-50%); /* perfect centering */
     /*margin-top: 10rem;*/
@@ -263,7 +271,7 @@
     position: relative;
     z-index: 2;
     grid-template-rows: auto auto; /* heads row, members row */
-    row-gap: clamp(1rem, 2vw, 2rem);
+    row-gap: clamp(1rem, 4vw, 4rem);
     align-items: start;
     justify-items: center;
     width: min(100%, 1200px);
@@ -281,25 +289,34 @@
       justify-items: center;
     }
 
-    .members-container {
-      .member {
-        .head-card {
-          border-radius: 100em;
-        }
-      }
-    }
-
     .member {
       display: grid;
       grid-template-rows: auto auto;
-      justify-items: center;
       gap: 0.5rem;
 
-      p {
-        color: white;
-        font-family: "Bull", monospace;
-        font-variation-settings: "wght" 180;
-        font-size: 1.5rem;
+      ul {
+        li {
+          &:nth-child(1) {
+            font-size: 1.5rem;
+            color: #dc0d40;
+            font-family: "Bull", monospace;
+            font-variation-settings: "wght" 220;
+          }
+          &:nth-child(2) {
+            font-size: 1.2rem;
+            margin-top: 0.5rem;
+            color: white;
+            font-family: "Bull", monospace;
+            font-variation-settings: "wght" 180;
+            font-synthesis: none;
+          }
+          &:nth-child(3) {
+            color: rgba(255, 255, 255, 0.8);
+            font-family: "Bull", monospace;
+            font-variation-settings: "wght" 180;
+            font-synthesis: none;
+          }
+        }
       }
 
       .head-card {
@@ -316,9 +333,30 @@
         }
       }
     }
+
+    .members-container {
+      .member {
+        justify-items: center;
+        gap: 0.5rem;
+
+        ul {
+          li {
+            margin-top: 0.2rem;
+            text-align: center;
+          }
+        }
+
+        .head-card {
+          border-radius: 100em;
+        }
+      }
+    }
   }
 
   .subteam-description {
+    font-family: "Bull", monospace;
+    font-variation-settings: "wght" 180;
+    font-synthesis: none;
     max-width: min(70ch, 85svw);
     margin: 2rem auto 0;
     line-height: 1.6;
