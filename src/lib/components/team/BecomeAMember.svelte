@@ -36,7 +36,6 @@
     display: grid;
     place-items: center;
     padding-block: clamp(2rem, 4vw, 5rem);
-    padding-inline: 1rem;
   }
 
   .container {
