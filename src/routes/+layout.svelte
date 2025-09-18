@@ -1,5 +1,4 @@
 <script>
-  import "../app.css";
   import favicon from "$lib/assets/logos/favicon.png";
   import NavBar from "$lib/components/NavBar.svelte";
 
