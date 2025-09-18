@@ -32,5 +32,10 @@
     "typescript": "^5.0.0",
     "vite": "^7.0.4",
     "vite-plugin-devtools-json": "^1.0.0"
+  },
+  "dependencies": {
+    "@tailwindcss/vite": "^4.1.13",
+    "tailwindcss": "^4.1.13",
+    "uninstall": "^0.0.0"
   }
 }

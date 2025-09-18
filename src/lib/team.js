@@ -1,96 +1,157 @@
+// Supervisor
+import ProfMohamedImg from "$lib/assets/Team/Supervisor/Prof-Mohamed-Abo-Al-Azm.jpg";
+// Mentors
+import MohamedRagabImg from "$lib/assets/Team/Mentors/Mohammed-Ragab.jpg";
+import OmarAmanImg from "$lib/assets/Team/Mentors/Omar-Aman.jpg";
+import YoussefMehannaImg from "$lib/assets/Team/Mentors/Youssef-Mehana.jpg";
+import AhmedMohImg from "$lib/assets/Team/Mentors/Ahmed-El-Sayed.jpg";
+import AyaRagabImg from "$lib/assets/Team/Mentors/Aya-Ragab.jpg";
+import OsamaHeshamImg from "$lib/assets/Team/Mentors/Osama-Hesham.jpg";
+import BelalAboImg from "$lib/assets/Team/Mentors/Belal-Abo-El-Khier.jpg";
+
+// Board
+import FaresFathyImg from "$lib/assets/Team/Heads/CTO-Fares-Fathy.jpg";
+import OmarOsamaImg from "$lib/assets/Team/Heads/CEO-Omar-Osama.jpg";
+import AbdelrahmanHikalImg from "$lib/assets/Team/Heads/Abdelrahman-Hikal-Mechanical.png";
+import HabibaAmrImg from "$lib/assets/Team/Heads/Habiba-Amr-Software.png";
+import MayaHossamImg from "$lib/assets/Team/Heads/Maya-Hossam-Software.jpg";
+
+//Members
+import YehiaSharawyImg from "$lib/assets/Team/Members/Yehia-Sharawy.jpeg";
+import YehiaAlaaImg from "$lib/assets/Team/Members/Yehia-Alaa.jpeg";
+
 const team = [
   {
-    role: ["Supervisor", "Dean of Student Affairs"],
+    subteam: "General",
+    title: "Supervisor",
     name: "Prof. Mohamed Abo El-Azm",
     department: "Mechanical Engineering",
     linkedin: "",
-    src: "/static/Team/Supervisor/Prof-Mohamed-Abo-Al-Azm.jpg",
+    src: ProfMohamedImg,
+    tags: ["Dean of Student Affairs"],
   },
   {
-    role: ["Mentor"],
+    subteam: "General",
+    title: "Mentor",
     name: "Mohamed Ragab",
     department: "Communications Engineering",
     linkedin: "",
-    src: "",
+    src: MohamedRagabImg,
   },
   {
-    role: ["Mentor"],
+    subteam: "General",
+    title: "Mentor",
     name: "Omar Aman",
     department: "Mechatronics Engineering",
     linkedin: "",
-    src: "",
+    src: OmarAmanImg,
   },
   {
-    role: ["Mentor"],
+    subteam: "General",
+    title: "Mentor",
     name: "Youssef Mehanna",
     department: "Computer Science",
     linkedin: "",
-    src: "",
+    src: YoussefMehannaImg,
   },
   {
-    role: ["Mentor"],
+    subteam: "General",
+    title: "Mentor",
     name: "Ahmed Mohamed",
     department: "Communications Engineering",
     linkedin: "",
-    src: "",
+    src: AhmedMohImg,
   },
   {
-    role: ["Mentor"],
+    subteam: ["General", "Media"],
+    title: "Mentor",
     name: "Aya Ashraf",
     department: "Communications Engineering",
     linkedin: "",
-    src: "",
+    src: AyaRagabImg,
   },
   {
-    role: ["Mentor"],
+    subteam: "General",
+    title: "Mentor",
     name: "Osama Hesham",
     department: "Computer Engineering",
     linkedin: "",
-    src: "",
+    src: OsamaHeshamImg,
   },
   {
-    role: ["Mentor"],
+    subteam: "General",
+    title: "Mentor",
     name: "Belal Abo Elkheir",
     department: "Computer Science",
     linkedin: "",
-    src: "",
+    src: BelalAboImg,
   },
   {
-    role: ["Electrical Head", "CEO"],
+    subteam: "Electrical",
+    title: "Head",
     name: "Omar Ossama",
     department: "Electrical Engineering",
     linkedin: "",
-    src: "",
+    src: OmarOsamaImg,
+    tags: ["CEO"],
   },
   {
-    role: ["CTO"],
+    subteam: "General",
+    title: "CTO",
     name: "Fares Fathy",
     department: "Artificial Intelligence",
     linkedin: "",
-    src: "",
+    src: FaresFathyImg,
   },
   {
-    role: ["Mechanical Head"],
+    subteam: "Mechanical",
+    title: "Head",
     name: "Abdelrahman Hikal",
     department: "Mechanical Engineering",
     linkedin: "",
-    src: "",
+    src: AbdelrahmanHikalImg,
   },
   {
-    role: ["Software Head"],
+    subteam: ["Computer Vision", "Control"],
+    title: "Head",
     name: "Habiba Amr",
     department: "Computer Engineering",
     linkedin: "",
-    src: "",
+    src: HabibaAmrImg,
   },
   {
-    role: ["Software Co-Head"],
+    subteam: ["Computer Vision", "Control"],
+    title: "Co-Head",
     name: "Maya Hossam",
-    department: "",
+    department: "Computer Engineering",
     linkedin: "",
-    src: "",
+    src: MayaHossamImg,
   },
-  { role: [""], name: "", department: "", linkedin: "", src: "" },
+  {
+    subteam: ["Computer Vision", "Media", "Mechanical", "Control"],
+    title: "Member",
+    name: "Yehia Sharawy",
+    department: "Computer Engineering",
+    linkedin: "",
+    src: YehiaSharawyImg,
+  },
+  {
+    subteam: ["Media", "Mechanical", "Electrical"],
+    title: "Member",
+    name: "Yehia Alaa",
+    department: "Mechanical Engineering",
+    linkedin: "",
+    src: YehiaAlaaImg,
+  },
+  {
+    subteam: ["Media", "Mechanical", "Electrical", "Control"],
+    title: "Member",
+    name: "Yehia Alaa",
+    department: "Mechanical Engineering",
+    linkedin: "",
+    src: YehiaAlaaImg,
+  },
+  { subteam: "", title: [""], name: "", department: "", linkedin: "", src: "" },
 ];
 
 export default team;

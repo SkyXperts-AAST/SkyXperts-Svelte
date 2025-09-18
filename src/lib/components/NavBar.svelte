@@ -13,10 +13,8 @@
     <div class="navRightContainer">
       <div class="navButtons">
         {#each navRoutes as route}
-          <a
-            class="button"
-            href={route.href}
-            on:click={() => (isOpened = false)}>{route.label}</a
+          <a class="button" href={route.href} onclick={() => (isOpened = false)}
+            >{route.label}</a
           >
         {/each}
       </div>
@@ -121,7 +119,7 @@
   }
 
   .logo {
-    max-width: clamp(3rem, 5vw, 5rem);
+    max-width: clamp(4rem, 5vw, 5rem);
   }
 
   .NavBar.opened {
@@ -163,11 +161,10 @@
       flex-direction: column;
       justify-content: space-evenly;
       height: 100%;
-      font-size: 2em;
 
       .button {
         margin: 0;
-        font-size: 2em;
+        font-size: clamp(3rem, 0rem + 5.3333vw, 4rem);
         color: rgba(255, 255, 255, 0.6);
 
         &::after {

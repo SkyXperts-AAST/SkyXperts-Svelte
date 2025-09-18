@@ -4,9 +4,9 @@
 
   export let title;
   export let subtitle = "";
-  export let bg; // background image URL or import
+  export let bg; // URL or import
   export let bgAlt = "background";
-  export let fontSize = "14em"; // default
+  export let fontSize = "14rem"; // default maximum label size
 
   // parallax factors
   export let parallaxBg = 0.3; // background moves slower
@@ -15,75 +15,75 @@
   let sectionEl;
   let y = 0;
 
-  function update() {
-    if (!sectionEl) return;
-    const rect = sectionEl.getBoundingClientRect();
-    y = -rect.top; // relative scroll offset
+  let ticking = false;
+  function onScrollOrResize() {
+    if (!sectionEl || ticking) return;
+    ticking = true;
+    requestAnimationFrame(() => {
+      const rect = sectionEl.getBoundingClientRect();
+      y = -rect.top; // relative scroll offset within viewport
+      ticking = false;
+    });
   }
 
   onMount(() => {
     if (!browser) return;
-    update();
-    window.addEventListener("scroll", update, { passive: true });
-    window.addEventListener("resize", update);
+    onScrollOrResize();
+    window.addEventListener("scroll", onScrollOrResize, { passive: true });
+    window.addEventListener("resize", onScrollOrResize);
     return () => {
-      window.removeEventListener("scroll", update);
-      window.removeEventListener("resize", update);
+      window.removeEventListener("scroll", onScrollOrResize);
+      window.removeEventListener("resize", onScrollOrResize);
     };
   });
+
   $: bgTranslate = `translate3d(0, ${y * parallaxBg}px, 0)`;
   $: textTranslate = `translate3d(0, ${y * parallaxText}px, 0)`;
 </script>
 
-<div class="title" style="--hero-font-size: {fontSize}" bind:this={sectionEl}>
+<!--
+  Use CSS vars for tuning:
+  --label-offset: vertical shift of the big h1 (e.g., 4rem)
+  --hero-max: max text size cap
+-->
+<section
+  class="hero"
+  bind:this={sectionEl}
+  style="--hero-max:{fontSize}; --label-offset: 10rem;"
+>
   <div class="bg" style="transform:{bgTranslate}">
     {#if bg}
-      <img src={bg} alt={bgAlt} />
+      <img src={bg} alt={bgAlt} loading="eager" />
     {/if}
   </div>
 
-  <h1 style="transform:{textTranslate}">
-    {@html title}
-  </h1>
-  {#if subtitle}
-    <h1 style="transform:{textTranslate}">{@html subtitle}</h1>
-  {/if}
-</div>
+  <div class="overlay"></div>
+  <div class="fade"></div>
+
+  <div class="content">
+    <h1 style="transform:{textTranslate}">
+      {@html title}
+    </h1>
+    {#if subtitle}
+      <h1 class="sub" style="transform:{textTranslate}">
+        {@html subtitle}
+      </h1>
+    {/if}
+  </div>
+</section>
 
 <style>
-  .title {
+  .hero {
     position: relative;
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    overflow: clip; /* or overflow: hidden; */
-    isolation: isolate;
-
-    &::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      z-index: 1;
-      background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3));
-      pointer-events: none;
-    }
-
-    &::after {
-      content: "";
-      position: absolute;
-      z-index: 5;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(
-        180deg,
-        rgba(0, 26, 48, 0) 82.68%,
-        #00162b 100%
-      );
-    }
+    width: 100%;
+    min-height: 100svh; /* can grow with content */
+    display: grid;
+    align-items: center;
+    overflow: clip; /* contain parallax bleed */
+    isolation: isolate; /* clean stacking context */
+    /* tweak vertical placement of the label(s) without inset: */
+    --label-offset: 0rem;
+    --hero-max: 14rem;
   }
 
   .bg {
@@ -92,27 +92,82 @@
     z-index: 0;
     overflow: hidden;
     will-change: transform;
+    transform: translateZ(0);
   }
-
   .bg img {
     width: 105%;
     height: 100%;
     object-fit: cover;
     object-position: 50% 70%;
-    z-index: 0;
+    display: block;
+    filter: none;
+  }
+
+  /* Soft contrast overlay */
+  .overlay {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3));
+  }
+
+  /* Bottom fade for legibility over next section */
+  .fade {
+    position: absolute;
+    z-index: 2;
+    inset: 0;
+    background: linear-gradient(
+      180deg,
+      rgba(0, 26, 48, 0) 82.68%,
+      #00162b 100%
+    );
+    pointer-events: none;
+  }
+
+  .content {
+    position: relative;
+    z-index: 3; /* above overlays, below nothing else */
+    display: grid;
+    row-gap: 0.15em;
+    /* This shifts both the main and sub headings downward using top + transform,
+       no inset shorthand necessary. */
+    top: var(--label-offset);
+    justify-items: start; /* left-align by default */
+    padding-left: clamp(0.75rem, 3vw, 2rem);
   }
 
   h1 {
-    position: relative;
-    z-index: 1;
     color: white;
     font-family: "Bull", monospace;
     font-variation-settings: "wght" 180;
     margin: 0;
-    bottom: -1em;
-    font-size: var(--hero-font-size, 14em);
-    line-height: 1em;
-    margin-left: 0.5em;
+    line-height: 1;
+    /* Use fluid clamp with a max cap, overridable via prop */
+    font-size: clamp(3.5rem, -6rem + 20vw, var(--hero-max));
     text-shadow: rgba(0, 0, 0, 0.7) 0px 20px 30px;
+    will-change: transform;
+  }
+
+  /* Secondary line slightly smaller for hierarchy */
+  .sub {
+    opacity: 0.9;
+    font-size: clamp(2.25rem, -5rem + 14vw, calc(var(--hero-max) * 0.6));
+  }
+
+  /* Center variant (optional): switch to center alignment by overriding this */
+  .hero.center .content {
+    justify-items: center;
+    padding-left: 0;
+  }
+
+  /* Reduce motion: disable parallax shifts */
+  @media (prefers-reduced-motion: reduce) {
+    .bg,
+    h1,
+    .sub {
+      transform: none !important;
+    }
   }
 </style>

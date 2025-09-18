@@ -1,4 +1,5 @@
 <script>
+  import "../app.css";
   import favicon from "$lib/assets/logos/favicon.png";
   import NavBar from "$lib/components/NavBar.svelte";
 
@@ -37,7 +38,7 @@
   :global(a) {
     text-decoration: none;
   }
-  :global(ul, li) {
+  /*:global(ul, li) {
     list-style: none;
-  }
+  }*/
 </style>
