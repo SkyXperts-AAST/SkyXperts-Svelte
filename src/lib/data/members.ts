@@ -1,3 +1,12 @@
+export type Person = {
+  id: string;
+  name: string;
+  department?: string;
+  linkedin?: string;
+  src?: string;
+  tags?: string[];
+};
+
 // Supervisor
 import ProfMohamedImg from "$lib/assets/Team/Supervisor/Prof-Mohamed-Abo-Al-Azm.jpg";
 // Mentors
@@ -10,148 +19,130 @@ import OsamaHeshamImg from "$lib/assets/Team/Mentors/Osama-Hesham.jpg";
 import BelalAboImg from "$lib/assets/Team/Mentors/Belal-Abo-El-Khier.jpg";
 
 // Board
-import FaresFathyImg from "$lib/assets/Team/Heads/CTO-Fares-Fathy.jpg";
-import OmarOsamaImg from "$lib/assets/Team/Heads/CEO-Omar-Osama.jpg";
-import AbdelrahmanHikalImg from "$lib/assets/Team/Heads/Abdelrahman-Hikal-Mechanical.png";
-import HabibaAmrImg from "$lib/assets/Team/Heads/Habiba-Amr-Software.png";
-import MayaHossamImg from "$lib/assets/Team/Heads/Maya-Hossam-Software.jpg";
+import MoustafaAdlyImg from "$lib/assets/Team/Heads/Moustafa-Adly.jpg";
+import FaresFathyImg from "$lib/assets/Team/Heads/Fares-Fathy.jpg";
+import OmarOsamaImg from "$lib/assets/Team/Heads/Omar-Osama.jpg";
+import AbdelrahmanHikalImg from "$lib/assets/Team/Heads/Abdelrahman-Hikal.png";
+import HabibaAmrImg from "$lib/assets/Team/Heads/Habiba-Amr.png";
+import MayaHossamImg from "$lib/assets/Team/Heads/Maya-Hossam.jpg";
 
 //Members
 import YehiaSharawyImg from "$lib/assets/Team/Members/Yehia-Sharawy.jpeg";
 import YehiaAlaaImg from "$lib/assets/Team/Members/Yehia-Alaa.jpeg";
 
-const team = [
+export const members: Person[] = [
   {
-    subteam: "General",
-    title: "Supervisor",
+    id: "prof-mohamed-abo-el-azm",
     name: "Prof. Mohamed Abo El-Azm",
     department: "Mechanical Engineering",
-    linkedin: "",
     src: ProfMohamedImg,
     tags: ["Dean of Student Affairs"],
   },
   {
-    subteam: "General",
-    title: "Mentor",
+    id: "mohamed-ragab",
     name: "Mohamed Ragab",
     department: "Communications Engineering",
-    linkedin: "",
     src: MohamedRagabImg,
   },
   {
-    subteam: "General",
-    title: "Mentor",
+    id: "omar-aman",
     name: "Omar Aman",
     department: "Mechatronics Engineering",
-    linkedin: "",
     src: OmarAmanImg,
   },
   {
-    subteam: "General",
-    title: "Mentor",
+    id: "youssef-mehanna",
     name: "Youssef Mehanna",
     department: "Computer Science",
-    linkedin: "",
     src: YoussefMehannaImg,
   },
   {
-    subteam: "General",
-    title: "Mentor",
+    id: "ahmed-mohamed",
     name: "Ahmed Mohamed",
     department: "Communications Engineering",
-    linkedin: "",
     src: AhmedMohImg,
   },
   {
-    subteam: ["General", "Media"],
-    title: "Mentor",
+    id: "aya-ashraf",
     name: "Aya Ashraf",
     department: "Communications Engineering",
-    linkedin: "",
     src: AyaRagabImg,
   },
   {
-    subteam: "General",
-    title: "Mentor",
+    id: "osama-hesham",
     name: "Osama Hesham",
     department: "Computer Engineering",
-    linkedin: "",
     src: OsamaHeshamImg,
   },
   {
-    subteam: "General",
-    title: "Mentor",
+    id: "belal-abo-elkheir",
     name: "Belal Abo Elkheir",
     department: "Computer Science",
-    linkedin: "",
     src: BelalAboImg,
   },
   {
-    subteam: "Electrical",
-    title: "Head",
-    name: "Omar Ossama",
-    department: "Electrical Engineering",
-    linkedin: "",
-    src: OmarOsamaImg,
-    tags: ["CEO"],
+    id: "moustafa-adly",
+    name: "Moustafa Adly",
+    department: "Mechanical Engineering",
+    src: MoustafaAdlyImg,
   },
   {
-    subteam: "General",
-    title: "CTO",
+    id: "omar-ossama",
+    name: "Omar Ossama",
+    department: "Electrical Engineering",
+    src: OmarOsamaImg,
+  },
+  {
+    id: "fares-fathy",
     name: "Fares Fathy",
     department: "Artificial Intelligence",
-    linkedin: "",
     src: FaresFathyImg,
   },
   {
-    subteam: "Mechanical",
-    title: "Head",
+    id: "abdelrahman-hikal",
     name: "Abdelrahman Hikal",
     department: "Mechanical Engineering",
-    linkedin: "",
     src: AbdelrahmanHikalImg,
   },
   {
-    subteam: ["Computer Vision", "Control"],
-    title: "Head",
+    id: "mohamed-nabil",
+    name: "Mohamed Nabil",
+    department: "Computer Engineering",
+  },
+  {
+    id: "habiba-amr",
     name: "Habiba Amr",
     department: "Computer Engineering",
-    linkedin: "",
     src: HabibaAmrImg,
   },
   {
-    subteam: ["Computer Vision", "Control"],
-    title: "Co-Head",
+    id: "maya-hossam",
     name: "Maya Hossam",
     department: "Computer Engineering",
-    linkedin: "",
     src: MayaHossamImg,
   },
   {
-    subteam: ["Computer Vision", "Mechanical", "Control"],
-    title: "Member",
+    id: "nour-allam",
+    name: "Nour Allam",
+    department: "Mechanical Engineering",
+  },
+  {
+    id: "yasmin-ahmed",
+    name: "Yasmin Ahmed",
+    department: "Computer Engineering",
+  },
+  {
+    id: "yehia-sharawy",
     name: "Yehia Sharawy",
     department: "Computer Engineering",
-    linkedin: "",
     src: YehiaSharawyImg,
   },
   {
-    subteam: ["Media", "Mechanical", "Electrical"],
-    title: "Member",
+    id: "yehia-alaa",
     name: "Yehia Alaa",
     department: "Mechanical Engineering",
-    linkedin: "",
     src: YehiaAlaaImg,
   },
-  {
-    subteam: ["Media", "Mechanical", "Electrical", "Control"],
-    title: "Member",
-    name: "Yehia Alaa",
-    department: "Mechanical Engineering",
-    linkedin: "",
-    src: YehiaAlaaImg,
-  },
-  { subteam: "", title: [""], name: "", department: "", linkedin: "", src: "" },
 ];
 
-export default team;
+export const memberById = Object.fromEntries(members.map((m) => [m.id, m]));

@@ -157,10 +157,10 @@
   }
 
   /* Center variant (optional): switch to center alignment by overriding this */
-  .hero.center .content {
+  /*.hero.center .content {
     justify-items: center;
     padding-left: 0;
-  }
+  }*/
 
   /* Reduce motion: disable parallax shifts */
   @media (prefers-reduced-motion: reduce) {

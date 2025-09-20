@@ -60,6 +60,7 @@
     margin-top: 5vh;
     transition: background 0.3s;
     z-index: 20;
+    background-color: yellow;
 
     .navContainer {
       display: flex;
