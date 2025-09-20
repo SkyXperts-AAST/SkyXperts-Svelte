@@ -13,7 +13,7 @@
   parallaxText={-0.12}
   fadeColor="#dc0d40"
 />
-<Board />
+<!-- <Board /> -->
 <Subteam />
 <BecomeAMember />
 
