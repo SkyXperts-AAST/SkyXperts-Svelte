@@ -100,8 +100,8 @@ export const seasons: Season[] = [
     roster: [
       {
         personId: "omar-ossama",
-        title: ["CEO"],
-        subteam: "General",
+        title: ["Head", "CEO"],
+        subteam: ["Electrical"],
       },
       { personId: "fares-fathy", title: "CTO", subteam: "General" },
       { personId: "abdelrahman-hikal", title: "Head", subteam: "Mechanical" },

@@ -69,7 +69,7 @@
     <div class="sidebar">
       <div class="season-switcher">
         <label>
-          Season
+          Choose Season
           <select bind:value={seasonId}>
             {#each ALL_SEASON_IDS as id}
               <option value={id}>{id}</option>
@@ -213,6 +213,25 @@
           flex-direction: column;
           align-items: center;
           font-size: 2rem;
+          text-transform: uppercase;
+
+          &::after {
+            content: "";
+            position: absolute;
+            pointer-events: none;
+            transform: translateY(80%);
+            width: 40px;
+            height: 40px;
+
+            /* inline SVG chevron, inherits currentColor (white) */
+            background-image: url("data:image/svg+xml;utf8,\
+          <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%23dc0d40'>\
+          <path d='M5.64 7.64 10 12l4.36-4.36-1.41-1.41L10 9.17 7.05 6.23 5.64 7.64z'/>\
+          </svg>");
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+            opacity: 0.9;
+          }
         }
 
         label,
@@ -230,6 +249,7 @@
           border: none;
           font-size: 5rem;
           cursor: pointer;
+          margin-top: 1rem;
           /*width: inherit;*/
         }
       }
