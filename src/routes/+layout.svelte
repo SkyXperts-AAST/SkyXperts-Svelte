@@ -37,6 +37,9 @@
   :global(a) {
     text-decoration: none;
   }
+  :global(h1, h2, h3, label, select, li) {
+    font-family: "Bull", monospace;
+  }
   :global(ul, li) {
     list-style: none;
     padding: 0;

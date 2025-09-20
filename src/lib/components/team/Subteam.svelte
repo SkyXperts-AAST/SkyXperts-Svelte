@@ -1,4 +1,5 @@
 <script>
+  import defaultImg from "$lib/assets/Team/default.webp";
   import subteam from "$lib/subteams.js";
   import Button from "$lib/components/Button.svelte";
 
@@ -118,6 +119,7 @@
           >
         </div>
       </div>
+
       <h1 class="current">{(subteam[selected].title ?? "").toUpperCase()}</h1>
 
       <div class="team-container">
@@ -126,7 +128,7 @@
           {#each filteredTeam.filter( (m) => hasRole( m, ["head", "co-head", "mentor"], ), ) as head}
             <span class="member">
               <div class="head-card">
-                <img src={head.src} alt={head.name} />
+                <img src={head.src || defaultImg} alt={head.name} />
               </div>
               <ul>
                 <li>{head.name}</li>
@@ -143,12 +145,12 @@
           {#each filteredTeam.filter((m) => hasRole(m, ["member"])) as member}
             <span class="member">
               <div class="head-card">
-                <img src={member.src} alt={member.name} />
+                <img src={member.src || defaultImg} alt={member.name} />
               </div>
               <ul>
                 <li>{member.name}</li>
                 <li>{member.title}</li>
-                <!-- <li>{member.department}</li> -->
+                <li>{member.department}</li>
               </ul>
             </span>
           {/each}
@@ -184,11 +186,7 @@
     min-height: 100svh;
     width: 100%;
     display: grid;
-    row-gap: clamp(
-      1.25rem,
-      2vw,
-      2rem
-    ); /* gap between grid and the description */
+    row-gap: clamp(1.25rem, 2vw, 2rem);
     padding-block: clamp(2rem, 3vw, 4rem);
 
     .layout-grid {
@@ -196,15 +194,15 @@
       /*grid-template-columns: minmax(220px, 1fr) minmax(0, 3fr);*/
       /*gap: clamp(1rem, 2.5vw, 2rem);*/
       align-items: start;
+      margin-top: 2rem;
 
       /* LEFT column */
       .sidebar {
         /*position: sticky;*/
-        top: 7rem;
+        /*top: 7rem;*/
         display: flex;
         justify-content: center;
         align-items: center;
-        /*width: 20em;*/
 
         label {
           color: #dc0d40;
@@ -222,8 +220,6 @@
             transform: translateY(80%);
             width: 40px;
             height: 40px;
-
-            /* inline SVG chevron, inherits currentColor (white) */
             background-image: url("data:image/svg+xml;utf8,\
           <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%23dc0d40'>\
           <path d='M5.64 7.64 10 12l4.36-4.36-1.41-1.41L10 9.17 7.05 6.23 5.64 7.64z'/>\
@@ -236,8 +232,6 @@
 
         label,
         select {
-          /*color: white;*/
-          font-family: "Bull", monospace;
           font-variation-settings: "wght" 180;
           font-synthesis: none;
         }
@@ -250,7 +244,6 @@
           font-size: 5rem;
           cursor: pointer;
           margin-top: 1rem;
-          /*width: inherit;*/
         }
       }
 
@@ -259,7 +252,7 @@
         position: relative;
         display: grid;
         align-items: start;
-        row-gap: clamp(1rem, 2vw, 2rem);
+        /*row-gap: clamp(1rem, 2vw, 2rem);*/
 
         .subteam-list {
           display: flex;
@@ -269,7 +262,6 @@
 
           h2 {
             color: rgba(255, 255, 255, 0.8);
-            font-family: "Bull", monospace;
             font-variation-settings: "wght" 180;
             font-size: clamp(2rem, -1rem + 5.3333vw, 3rem);
             margin: 1rem;
@@ -356,13 +348,13 @@
 
         .current {
           color: rgba(255, 255, 255, 0.1);
-          font-family: "Bull", monospace;
           font-variation-settings: "wght" 220;
           font-size: clamp(2.5rem, -25rem + 37.3333vw, 10rem);
           text-align: center;
           position: absolute;
           z-index: 1;
-          top: 24rem; /* pushes it down from the top */
+          letter-spacing: 2rem;
+          top: 7rem;
           left: 50%; /* centers horizontally */
           transform: translateX(-50%); /* perfect centering */
           /*margin-top: 10rem;*/
@@ -379,7 +371,7 @@
           width: min(100%, 1200px);
           margin-inline: auto;
           padding-block: clamp(1rem, 2vw, 2rem);
-          margin-top: 5rem;
+          margin-top: 2rem;
 
           .heads-container,
           .members-container {
@@ -401,20 +393,17 @@
                 &:nth-child(1) {
                   font-size: 1.5rem;
                   color: #dc0d40;
-                  font-family: "Bull", monospace;
                   font-variation-settings: "wght" 220;
                 }
                 &:nth-child(2) {
                   font-size: 1.2rem;
                   margin-top: 0.5rem;
                   color: white;
-                  font-family: "Bull", monospace;
                   font-variation-settings: "wght" 180;
                   font-synthesis: none;
                 }
                 &:nth-child(3) {
                   color: rgba(255, 255, 255, 0.8);
-                  font-family: "Bull", monospace;
                   font-variation-settings: "wght" 180;
                   font-synthesis: none;
                 }
@@ -426,6 +415,7 @@
               aspect-ratio: 1 / 1; /* keeps card square even before image loads */
               overflow: hidden;
               border-radius: 20px;
+              /*border: 5px solid #3432ca;*/
 
               img {
                 width: 100%;
@@ -433,6 +423,12 @@
                 object-fit: cover;
                 object-position: top center;
               }
+            }
+          }
+
+          .heads-container {
+            .head-card {
+              /*border: 5px solid #3432ca;*/
             }
           }
 

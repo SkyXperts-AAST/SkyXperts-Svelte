@@ -7,6 +7,7 @@
   export let bg; // URL or import
   export let bgAlt = "background";
   export let fontSize = "14rem"; // default maximum label size
+  export let fadeColor = "#00162b";
 
   // parallax factors
   export let parallaxBg = 0.3; // background moves slower
@@ -58,7 +59,7 @@
   </div>
 
   <div class="overlay"></div>
-  <div class="fade"></div>
+  <div class="fade" style="--fade-color:{fadeColor}"></div>
 
   <div class="content">
     <h1 style="transform:{textTranslate}">
@@ -121,7 +122,7 @@
     background: linear-gradient(
       180deg,
       rgba(0, 26, 48, 0) 82.68%,
-      #00162b 100%
+      var(--fade-color) 100%
     );
     pointer-events: none;
   }
@@ -140,8 +141,8 @@
 
   h1 {
     color: white;
-    font-family: "Bull", monospace;
     font-variation-settings: "wght" 180;
+    font-synthesis: none;
     margin: 0;
     line-height: 1;
     /* Use fluid clamp with a max cap, overridable via prop */

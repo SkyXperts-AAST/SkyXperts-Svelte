@@ -52,7 +52,6 @@
 
   h1,
   h2 {
-    font-family: "Bull", monospace;
     font-variation-settings: "wght" 180;
     font-synthesis: none;
     color: white;
