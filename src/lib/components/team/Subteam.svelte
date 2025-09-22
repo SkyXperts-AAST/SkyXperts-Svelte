@@ -1,5 +1,6 @@
 <script>
   import defaultImg from "$lib/assets/Team/default.webp";
+  import wallImg from "$lib/assets/imgs/wallpaper.webp";
   import subteam from "$lib/subteams.js";
   import Button from "$lib/components/Button.svelte";
 
@@ -91,10 +92,10 @@
   <div class="layout-grid">
     <!-- LEFT: season switcher -->
     <div class="sidebar">
-      <div class="line"></div>
+      <div class="line" style={`background-image:url('${wallImg}')`}></div>
       <div class="season-switcher">
         <label>
-          &#10097; Choose Season &#10096;
+          &#10097; See All Seasons &#10096;
           <select bind:value={seasonId}>
             {#each ALL_SEASON_IDS as id}
               <option value={id}>{id}</option>
@@ -248,7 +249,6 @@
     --item-w: clamp(10rem, -1.25rem + 20vw, 13.75rem);
     --gap: 16px;
   }
-
   .layout {
     min-height: 100svh;
     width: 100%;
@@ -271,12 +271,12 @@
         justify-content: center;
         align-items: center;
 
-        &::before {
+        /*&::before {
           content: "";
           position: absolute;
           left: 0;
           right: 0;
-          top: 7%;
+          top: 10%;
           height: 1rem;
           background-color: #dc0d40;
 
@@ -290,6 +290,15 @@
             rgba(0, 0, 0, 0.5) 70%,
             rgba(0, 0, 0, 0) 100%
           );
+        }*/
+
+        .line {
+          position: absolute;
+          width: 100%;
+          inset: 0;
+          background-size: cover;
+          background-position: center;
+          background-repeat: no-repeat;
         }
 
         label {
@@ -298,10 +307,11 @@
           position: relative;
           flex-direction: column;
           align-items: center;
-          font-size: 2rem;
+          font-size: clamp(2rem, -1rem + 5.3333vw, 3rem);
           text-transform: uppercase;
+          cursor: pointer;
 
-          &::after {
+          /*&::after {
             content: "";
             position: absolute;
             pointer-events: none;
@@ -315,7 +325,7 @@
             background-repeat: no-repeat;
             background-size: 100% 100%;
             opacity: 0.9;
-          }
+          }*/
         }
 
         label,
@@ -523,7 +533,8 @@
               /*box-shadow: rgba(52, 50, 202, 0.5) 0px 5px 15px;*/
             }
           }
-          .board-container,
+
+          /*.board-container,*/
           .members-container {
             grid-template-columns: repeat(
               auto-fit,
