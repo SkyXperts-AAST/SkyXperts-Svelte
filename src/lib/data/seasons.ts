@@ -45,7 +45,6 @@ export const seasons: Season[] = [
         title: ["CEO"],
         subteam: "General",
       },
-      { personId: "fares-fathy", title: "CTO", subteam: "General" },
       {
         personId: "omar-ossama",
         title: "Head",

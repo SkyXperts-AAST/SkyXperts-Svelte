@@ -1,11 +1,27 @@
 <script>
+  import { onMount } from "svelte";
+  import { browser } from "$app/environment";
   import Button from "./Button.svelte";
   import Logo from "$lib/assets/logos/skyxpert-short-logo.png";
-  let isOpened = false;
   import navRoutes from "$lib/navRoutes.js";
+
+  let isOpened = false;
+  let blurred = false;
+
+  function handleScroll() {
+    const scrollTop = window.scrollY || document.documentElement.scrollTop;
+    blurred = scrollTop > 8; // blur after a tiny scroll
+  }
+
+  onMount(() => {
+    if (!browser) return;
+    handleScroll(); // initialize on load
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  });
 </script>
 
-<div class={isOpened ? "NavBar opened" : "NavBar"}>
+<div class={`NavBar ${isOpened ? "opened" : ""} ${blurred ? "blurred" : ""}`}>
   <div class="navContainer">
     <a href="/">
       <img src={Logo} alt="Logo" class="logo" />
@@ -13,8 +29,10 @@
     <div class="navRightContainer">
       <div class="navButtons">
         {#each navRoutes as route}
-          <a class="button" href={route.href} onclick={() => (isOpened = false)}
-            >{route.label}</a
+          <a
+            class="button"
+            href={route.href}
+            on:click={() => (isOpened = false)}>{route.label}</a
           >
         {/each}
       </div>
@@ -52,70 +70,84 @@
 </div>
 
 <style>
+  /* Apply blur to the element you SEE (.navContainer), with a translucent background */
+
   .NavBar {
     display: flex;
     justify-content: center;
     position: fixed;
+    top: 0;
     width: 100%;
-    margin-top: 5vh;
-    transition: background 0.3s;
+    /*margin-top: 5vh;*/
     z-index: 20;
+    max-width: 100%; /* prevent shrinking */
+    padding: 1rem; /* keep vertical + horizontal padding */
+    box-sizing: border-box;
+  }
 
-    .navContainer {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      position: fixed;
-      width: 90%;
+  .NavBar.blurred {
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    background-color: rgba(255, 2655, 255, 0.3); /* semi-transparent */
+    transition:
+      backdrop-filter 0.3s ease,
+      background-color 0.3s ease;
+  }
 
-      .navRightContainer {
-        display: flex;
+  /* Make only the parent fixed; let the container be the painted layer */
+  .navContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 90%;
+  }
 
-        :global(.menu-toggle[aria-expanded="false"]) {
-          display: flex;
-          align-items: center;
-        }
+  .navRightContainer {
+    display: flex;
+  }
 
-        svg {
-          height: 20px;
-          margin-right: 0.3em;
-        }
-      }
-    }
-    .navButtons {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      width: 100%;
-      max-width: 650px;
-      /*background-color: magenta;*/
+  :global(.menu-toggle[aria-expanded="false"]) {
+    display: flex;
+    align-items: center;
+  }
 
-      .button {
-        position: relative;
-        margin-right: 1em;
-        color: white;
-        font-family: "Bull", monospace;
-        font-variation-settings: "wght" 220;
-        font-size: 1.2em;
+  .navRightContainer svg {
+    height: 20px;
+    margin-right: 0.3em;
+  }
 
-        &::after {
-          content: "";
-          position: absolute;
-          bottom: -0.5em;
-          left: 0;
-          height: 2px;
-          width: 100%;
-          background-color: red;
-          transform: scaleX(0);
-          transform-origin: bottom;
-          transition: transform 0.1s ease-in-out;
-        }
+  .navButtons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 650px;
+  }
 
-        &:hover::after {
-          transform: scaleX(1);
-        }
-      }
-    }
+  .navButtons .button {
+    position: relative;
+    margin-right: 1em;
+    color: white;
+    font-family: "Bull", monospace;
+    font-variation-settings: "wght" 220;
+    font-size: 1.2em;
+  }
+
+  .navButtons .button::after {
+    content: "";
+    position: absolute;
+    bottom: -0.5em;
+    left: 0;
+    height: 2px;
+    width: 100%;
+    background-color: red;
+    transform: scaleX(0);
+    transform-origin: bottom;
+    transition: transform 0.1s ease-in-out;
+  }
+
+  .navButtons .button:hover::after {
+    transform: scaleX(1);
   }
 
   .logo {
@@ -183,6 +215,11 @@
       .navButtons {
         display: none;
       }
+    }
+
+    .NavBar.blurred {
+      backdrop-filter: unset;
+      background-color: transparent;
     }
   }
 </style>

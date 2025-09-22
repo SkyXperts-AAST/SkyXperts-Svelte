@@ -54,7 +54,7 @@
       font-synthesis: none;
       color: white;
       margin-left: 2rem;
-      margin-bottom: 5rem;
+      margin-bottom: -3rem;
     }
     .test {
       width: 100%;

@@ -62,6 +62,29 @@
   const currentDescription = $derived(
     (currentSubteam.description ?? "").trim(),
   );
+  const ceos = $derived(
+    team.filter((m) => hasRole(m, ["ceo", "chief executive officer"])),
+  );
+  const ctos = $derived(
+    team.filter((m) =>
+      hasRole(m, [
+        "cto",
+        "chief technology officer",
+        "chief technical officer",
+      ]),
+    ),
+  );
+
+  // Helper: return the matched role from titles, otherwise fallback
+  const pickRole = (titles, preferred) => {
+    if (Array.isArray(titles)) {
+      const lower = titles.map((t) => t.toString().trim().toLowerCase());
+      const i = preferred.findIndex((p) => lower.includes(p.toLowerCase()));
+      if (i !== -1) return preferred[i]; // return canonical preferred label
+      return titles[0]; // fallback
+    }
+    return titles; // string case
+  };
 </script>
 
 <section class="layout">
@@ -83,6 +106,52 @@
 
     <!-- RIGHT: everything else (title stays absolute inside this box) -->
     <div class="main">
+      <div class="board-list">
+        <h2>Board</h2>
+
+        <!-- CEO -->
+        <div class="board-container">
+          {#if ceos.length}
+            {#each ceos as board}
+              <span class="member">
+                <div class="head-card">
+                  <img src={board.src || defaultImg} alt={board.name} />
+                </div>
+                <ul>
+                  <li>{board.name}</li>
+                  <li>
+                    {pickRole(board.title, ["CEO"])}
+                  </li>
+                  <li>{board.department}</li>
+                </ul>
+              </span>
+            {/each}
+          {/if}
+
+          {#if ctos.length}
+            {#each ctos as board}
+              <span class="member">
+                <div class="head-card">
+                  <img src={board.src || defaultImg} alt={board.name} />
+                </div>
+                <ul>
+                  <li>{board.name}</li>
+                  <li>
+                    {pickRole(board.title, ["CTO"])}
+                  </li>
+                  <li>{board.department}</li>
+                </ul>
+              </span>
+            {/each}
+          {/if}
+        </div>
+
+        <!-- Fallback if neither exists -->
+        {#if !ceos.length && !ctos.length}
+          <p class="board-empty">No CEO/CTO found for this subteam/season.</p>
+        {/if}
+      </div>
+
       <div class="subteam-list">
         <h2>Subteams</h2>
         <div class="controls">
@@ -133,9 +202,7 @@
               </div>
               <ul>
                 <li>{head.name}</li>
-                <li>
-                  {Array.isArray(head.title) ? head.title[0] : head.title}
-                </li>
+                <li>{pickRole(head.title, ["Head", "Co-Head"])}</li>
                 <li>{head.department}</li>
               </ul>
             </span>
@@ -150,7 +217,7 @@
               </div>
               <ul>
                 <li>{member.name}</li>
-                <li>{member.title}</li>
+                <li>{pickRole(member.title, ["Member"])}</li>
                 <li>{member.department}</li>
               </ul>
             </span>
@@ -198,11 +265,32 @@
 
       /* LEFT column */
       .sidebar {
-        /*position: sticky;*/
+        position: relative;
         /*top: 7rem;*/
         display: flex;
         justify-content: center;
         align-items: center;
+
+        &::before {
+          content: "";
+          position: absolute;
+          left: 0;
+          right: 0;
+          top: 75%; /* or use margin-top if you prefer */
+          height: 1rem; /* control bar height */
+          background-color: white;
+
+          mask-image: linear-gradient(
+            90deg,
+            rgba(0, 0, 0, 0) 0%,
+            rgba(0, 0, 0, 0.5) 30%,
+            rgba(0, 0, 0, 0) 40%,
+            rgba(0, 0, 0, 0) 50%,
+            rgba(0, 0, 0, 0) 60%,
+            rgba(0, 0, 0, 0.5) 70%,
+            rgba(0, 0, 0, 0) 100%
+          );
+        }
 
         label {
           color: #dc0d40;
@@ -254,18 +342,18 @@
         align-items: start;
         /*row-gap: clamp(1rem, 2vw, 2rem);*/
 
+        h2 {
+          color: rgba(255, 255, 255, 0.8);
+          font-variation-settings: "wght" 180;
+          font-size: clamp(2rem, -1rem + 5.3333vw, 3rem);
+          margin: 1rem;
+        }
+
         .subteam-list {
           display: flex;
           flex-direction: column;
           align-items: center;
           justify-content: center;
-
-          h2 {
-            color: rgba(255, 255, 255, 0.8);
-            font-variation-settings: "wght" 180;
-            font-size: clamp(2rem, -1rem + 5.3333vw, 3rem);
-            margin: 1rem;
-          }
 
           .controls {
             position: relative;
@@ -360,7 +448,7 @@
           display: none;
           /*margin-top: 10rem;*/
         }
-
+        .board-list,
         .team-container {
           display: grid;
           position: relative;
@@ -374,6 +462,7 @@
           padding-block: clamp(1rem, 2vw, 2rem);
           margin-top: 2rem;
 
+          .board-container,
           .heads-container,
           .members-container {
             position: static;
@@ -434,7 +523,7 @@
               /*box-shadow: rgba(52, 50, 202, 0.5) 0px 5px 15px;*/
             }
           }
-
+          .board-container,
           .members-container {
             grid-template-columns: repeat(
               auto-fit,
@@ -452,12 +541,15 @@
                   text-align: center;
                 }
               }
-
-              .head-card {
-                border-radius: 100em;
-              }
             }
           }
+          .members-container .head-card {
+            border-radius: 100em;
+          }
+        }
+        .board-list {
+          margin-top: 0;
+          row-gap: clamp(2rem, 3vw, 3rem);
         }
       }
     }
@@ -476,6 +568,14 @@
 
     .subteam-description--empty {
       opacity: 0.6;
+    }
+  }
+
+  @media (max-width: 900px) {
+    .layout .layout-grid .sidebar {
+      &::before {
+        background-color: transparent;
+      }
     }
   }
 
