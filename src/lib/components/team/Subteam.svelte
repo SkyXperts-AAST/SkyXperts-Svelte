@@ -94,7 +94,7 @@
       <div class="line"></div>
       <div class="season-switcher">
         <label>
-          Choose Season
+          &#10097; Choose Season &#10096;
           <select bind:value={seasonId}>
             {#each ALL_SEASON_IDS as id}
               <option value={id}>{id}</option>
@@ -276,17 +276,17 @@
           position: absolute;
           left: 0;
           right: 0;
-          top: 75%; /* or use margin-top if you prefer */
-          height: 1rem; /* control bar height */
-          background-color: white;
+          top: 7%;
+          height: 1rem;
+          background-color: #dc0d40;
 
           mask-image: linear-gradient(
             90deg,
             rgba(0, 0, 0, 0) 0%,
             rgba(0, 0, 0, 0.5) 30%,
-            rgba(0, 0, 0, 0) 40%,
+            rgba(0, 0, 0, 0) 42%,
             rgba(0, 0, 0, 0) 50%,
-            rgba(0, 0, 0, 0) 60%,
+            rgba(0, 0, 0, 0) 58%,
             rgba(0, 0, 0, 0.5) 70%,
             rgba(0, 0, 0, 0) 100%
           );

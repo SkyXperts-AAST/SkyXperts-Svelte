@@ -17,7 +17,7 @@
 <Board />
 <Subteam />
 
-<!-- <BecomeAMember /> -->
+<BecomeAMember />
 
 <style>
 </style>

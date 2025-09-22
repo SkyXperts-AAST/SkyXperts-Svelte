@@ -1,6 +1,6 @@
 <script>
   import Hero from "$lib/components/Hero.svelte";
-  import CosmosParagraph from "$lib/components/team/CosmosParagraph.svelte";
+  import CosmosParagraph from "$lib/components/CosmosParagraph.svelte";
   import teamBg from "$lib/assets/Events/Alamein-Airshow-24/alameinairshow-team.jpg";
 </script>
 
