@@ -11,7 +11,7 @@
   button {
     font-family: "Bull", monospace;
     font-variation-settings: "wght" 180;
-    font-size: 1.4em;
+    font-size: clamp(1rem, -0.2rem + 2.1333vw, 1.4rem);
     color: white;
     border-radius: 9999px;
     padding: 0.45rem 0.9rem;

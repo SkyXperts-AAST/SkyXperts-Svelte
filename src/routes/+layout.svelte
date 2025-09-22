@@ -1,5 +1,5 @@
 <script>
-  import favicon from "$lib/assets/favicon.svg";
+  import favicon from "$lib/assets/logos/favicon.png";
   import NavBar from "$lib/components/NavBar.svelte";
 
   let { children } = $props();
@@ -37,7 +37,12 @@
   :global(a) {
     text-decoration: none;
   }
+  :global(h1, h2, h3, label, select, li) {
+    font-family: "Bull", monospace;
+  }
   :global(ul, li) {
     list-style: none;
+    padding: 0;
+    margin: 0;
   }
 </style>

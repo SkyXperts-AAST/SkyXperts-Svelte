@@ -4,13 +4,16 @@
 </script>
 
 <Hero title="Our Drones" bg={teamBg} parallaxBg={0.5} parallaxText={-0.12} />
-<section>HIII</section>
+
+<section></section>
 
 <style>
   section {
     height: 100vh;
     width: 100vw;
-
+    display: flex;
+    align-items: center;
+    justify-content: center;
     background-color: #00162b;
   }
 </style>

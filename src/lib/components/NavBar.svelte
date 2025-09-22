@@ -2,13 +2,7 @@
   import Button from "./Button.svelte";
   import Logo from "$lib/assets/logos/skyxpert-short-logo.png";
   let isOpened = false;
-  let navRoutes = [
-    { label: "Team", href: "/team" },
-    { label: "Drones", href: "/drones" },
-    { label: "Partnerships", href: "/partnerships" },
-    { label: "Next Steps", href: "#updates" },
-    { label: "Contact Us", href: "#contactus" },
-  ];
+  import navRoutes from "$lib/navRoutes.js";
 </script>
 
 <div class={isOpened ? "NavBar opened" : "NavBar"}>
@@ -16,11 +10,12 @@
     <a href="/">
       <img src={Logo} alt="Logo" class="logo" />
     </a>
-
     <div class="navRightContainer">
       <div class="navButtons">
         {#each navRoutes as route}
-          <a class="button" href={route.href}>{route.label}</a>
+          <a class="button" href={route.href} onclick={() => (isOpened = false)}
+            >{route.label}</a
+          >
         {/each}
       </div>
 
@@ -124,7 +119,7 @@
   }
 
   .logo {
-    max-width: clamp(3rem, 5vw, 5rem);
+    max-width: clamp(4rem, 5vw, 5rem);
   }
 
   .NavBar.opened {
@@ -166,11 +161,10 @@
       flex-direction: column;
       justify-content: space-evenly;
       height: 100%;
-      font-size: 2em;
 
       .button {
         margin: 0;
-        font-size: 2em;
+        font-size: clamp(3rem, 0rem + 5.3333vw, 4rem);
         color: rgba(255, 255, 255, 0.6);
 
         &::after {
