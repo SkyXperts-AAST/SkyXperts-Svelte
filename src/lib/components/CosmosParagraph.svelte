@@ -7,6 +7,8 @@
   export let align: "left" | "center" | "right" | "justify" = "justify";
   export let baseAlpha = 0.5;
   export let staggerMs = 80; // cascade speed
+  export let width: string = "100%"; // e.g. "60ch", "40rem", "80%", "min(70ch, 80vw)"
+  export let maxWidth: string | null = null; // optional cap
 
   const words = text.trim().replace(/\s+/g, " ").split(" ").filter(Boolean);
 
@@ -75,6 +77,8 @@
   bind:this={el}
   class="intro align-{align}"
   style={`--count:${words.length}; --base-alpha:${baseAlpha}; --stagger-ms:${staggerMs}ms; --progress:0;`}
+  style:width
+  style:max-width={maxWidth ?? undefined}
   role="group"
   aria-label="scroll reveal paragraph"
 >
@@ -88,7 +92,6 @@
 <style>
   .intro {
     display: block; /* instead of flex */
-    width: 70%;
     line-height: 1.1;
     text-align: justify; /* ← justify! */
     text-justify: inter-word; /* better spacing */

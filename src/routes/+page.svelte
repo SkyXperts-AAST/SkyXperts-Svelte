@@ -16,6 +16,7 @@
   <CosmosParagraph
     text="SkyXperts UAV Club, a leading student-led robotics club at the Arab Academy for Science and Technology (AAST), is seeking a strategic partnership with forward-thinking companies to support our mission of advancing drone technology and nurturing future engineering leaders in Egypt. Your investment will directly fuel our research and development, providing a critical competitive edge as we prepare for international competitions, while also offering your company unparalleled brand visibility and access to top-tier talent."
     align="justify"
+    width="70%"
     baseAlpha={0.2}
     triggerAt={0.8}
     revealDistancePx={600}

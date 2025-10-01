@@ -1,9 +1,22 @@
 <script>
   import { sponsorSections, contentSections } from "$lib/data/sponsors";
+  import CosmosParagraph from "$lib/components/CosmosParagraph.svelte";
 </script>
 
 <main>
   <h1>Why Sponsor Sky<span style="color:red">X</span>perts?</h1>
+  <span class="wrapper">
+    <CosmosParagraph
+      text="As a self-funded, non-profit organization, our growth is limited by the availability of resources. The scarcity of specialized components in Egypt presents a significant challenge to our innovation. Your sponsorship will enable us to overcome these hurdles and:"
+      align="justify"
+      width="100%"
+      baseAlpha={0.2}
+      triggerAt={0.9}
+      revealDistancePx={600}
+      staggerMs={0}
+    /></span
+  >
+
   <div class="grid-wrap">
     {#each contentSections as section, i}
       <div class="row" class:reverse={i % 2 === 1}>
@@ -33,6 +46,12 @@
     font-synthesis: none;
     color: white;
     margin-left: 2rem;
+  }
+
+  .wrapper {
+    display: flex;
+    justify-content: start;
+    padding: 0 2rem;
   }
   .row {
     display: grid;
@@ -95,6 +114,7 @@
       display: flex;
       justify-content: center;
       margin: 0;
+      margin-bottom: 2rem;
     }
     .row {
       grid-template-columns: 1fr;
