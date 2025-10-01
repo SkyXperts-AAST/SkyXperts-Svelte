@@ -1,5 +1,5 @@
 <script>
-  import { sponsorSections, contentSections } from "$lib/data/sponsors";
+  import { contentSections } from "$lib/data/sponsors";
   import CosmosParagraph from "$lib/components/CosmosParagraph.svelte";
 </script>
 
@@ -106,6 +106,7 @@
     height: auto;
     display: block;
     border-radius: 0.75rem;
+    box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
   }
 
   /* Make it stack cleanly on small screens */
