@@ -29,7 +29,7 @@
     min-height: 100svh;
   }
   h1 {
-    font-size: clamp(2rem, -7rem + 16vw, 5rem);
+    font-size: clamp(1.8rem, -7.8rem + 17.0667vw, 5rem);
     font-synthesis: none;
     color: white;
     margin-left: 2rem;
