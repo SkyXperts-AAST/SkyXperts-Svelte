@@ -37,7 +37,7 @@
   :global(a) {
     text-decoration: none;
   }
-  :global(h1, h2, h3, label, select, li) {
+  :global(h1, h2, h3, label, select, li, p) {
     font-family: "Bull", monospace;
   }
   :global(ul, li) {

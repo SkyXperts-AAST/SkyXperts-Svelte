@@ -1,6 +1,6 @@
 <script>
   import defaultImg from "$lib/assets/Team/default.webp";
-  import wallImg from "$lib/assets/imgs/wallpaper.webp";
+  // import wallImg from "$lib/assets/imgs/wallpaper.webp";
   import subteam from "$lib/subteams.js";
   import Button from "$lib/components/Button.svelte";
 
@@ -89,10 +89,11 @@
 </script>
 
 <section class="layout">
+  <!-- <div class="line" style={`background-image:url('${wallImg}')`}></div> -->
   <div class="layout-grid">
     <!-- LEFT: season switcher -->
     <div class="sidebar">
-      <div class="line" style={`background-image:url('${wallImg}')`}></div>
+      <!-- <div class="line" style={`background-image:url('${wallImg}')`}></div> -->
       <div class="season-switcher">
         <label>
           &#10097; See All Seasons &#10096;
@@ -249,10 +250,12 @@
     --item-w: clamp(10rem, -1.25rem + 20vw, 13.75rem);
     --gap: 16px;
   }
+
   .layout {
     min-height: 100svh;
     width: 100%;
     display: grid;
+    position: relative;
     row-gap: clamp(1.25rem, 2vw, 2rem);
     padding-block: clamp(2rem, 3vw, 4rem);
 
@@ -298,7 +301,6 @@
           inset: 0;
           background-size: cover;
           background-position: center;
-          background-repeat: no-repeat;
         }
 
         label {
