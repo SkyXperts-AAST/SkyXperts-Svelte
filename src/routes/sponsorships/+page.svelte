@@ -3,10 +3,13 @@
   import teamBg from "$lib/assets/Events/Rally-24/rally-team.jpeg";
   import WhySponsor from "$lib/components/sponsors/WhySponsor.svelte";
   import Plans from "$lib/components/sponsors/Plans.svelte";
+  import CurrentSponsors from "$lib/components/sponsors/Current.svelte";
+  import Current from "$lib/components/sponsors/Current.svelte";
 </script>
 
 <Hero title="Sponsorships" bg={teamBg} parallaxBg={0.5} parallaxText={-0.12} />
 <WhySponsor />
+<Current />
 <Plans />
 
 <!-- <section>HIII</section> -->
@@ -15,7 +18,6 @@
   section {
     height: 100vh;
     width: 100vw;
-
     background-color: #00162b;
   }
 </style>

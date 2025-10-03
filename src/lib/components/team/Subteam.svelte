@@ -1,53 +1,54 @@
-<script>
+<script lang="ts">
   import defaultImg from "$lib/assets/Team/default.webp";
-  // import wallImg from "$lib/assets/imgs/wallpaper.webp";
-  import subteam from "$lib/subteams.js";
   import Button from "$lib/components/Button.svelte";
 
-  // NEW: import season data helpers (from the seasons structure I proposed)
   import {
     CURRENT_SEASON_ID,
     getExpandedRoster,
+    getActiveSubteams,
     ALL_SEASON_IDS,
   } from "$lib/data/seasons";
 
-  // Pick a season (you can bind this to a <select> in markup if you want)
+  // If you still need the catalog (e.g., for titles/descriptions), you can import it too
+  // import { SUBTEAM_CATALOG } from "$lib/data/subteams";
+
+  // --- state derived from the chosen season ---
   let seasonId = $state(CURRENT_SEASON_ID);
 
-  // Derive the active team's roster for the chosen season
   const team = $derived(getExpandedRoster(seasonId));
+  const activeSubteams = $derived(getActiveSubteams(seasonId)); // <— replaces static `subteam`
 
-  // --- your existing carousel logic ---
-  let selected = $state(2);
-  const n = $derived(subteam.length);
+  // --- carousel state ---
+  let selected = $state(0);
+  const n = $derived(activeSubteams.length);
 
-  function ringOffset(i) {
+  // Reset selection if season changes or there are fewer tabs
+  $effect(() => {
+    // touch dependencies:
+    const _ = n + seasonId;
+    if (selected >= n) selected = 0;
+  });
+
+  function ringOffset(i: number) {
     return ((i - selected + n + Math.floor(n / 2)) % n) - Math.floor(n / 2);
   }
-
-  function select(i) {
-    selected = (i + n) % n;
-  }
+  const select = (i: number) => (selected = (i + n) % n);
   const prev = () => select(selected - 1);
   const next = () => select(selected + 1);
 
-  function handleKeys(e) {
-    if (e.key === "ArrowLeft") prev();
-    if (e.key === "ArrowRight") next();
-  }
-
-  const norm = (s) => (s ?? "").toString().trim().toLowerCase();
-  const titlesOf = (m) =>
+  // ---- filtering helpers (unchanged) ----
+  const norm = (s: unknown) => (s ?? "").toString().trim().toLowerCase();
+  const titlesOf = (m: any) =>
     Array.isArray(m.title) ? m.title.map(norm) : [norm(m.title)];
-  const hasRole = (m, roles) => {
+  const hasRole = (m: any, roles: string[]) => {
     const set = titlesOf(m);
     return roles.some((r) => set.includes(norm(r)));
   };
 
   // Selected subteam title (normalized)
-  const currentTitle = $derived(norm(subteam[selected]?.title));
+  const currentTitle = $derived(norm(activeSubteams[selected]?.title));
 
-  // Filter by subteam (string or array) — now reads from the season roster
+  // Filter the active team to the selected subteam
   const filteredTeam = $derived(
     team.filter((member) => {
       const v = member.subteam;
@@ -56,13 +57,15 @@
     }),
   );
 
-  // Current subteam description (unchanged)
+  // Provide description for the selected subteam (season-aware)
   const currentSubteam = $derived(
-    subteam[selected] ?? { title: "", description: "" },
+    activeSubteams[selected] ?? { title: "", description: "" },
   );
   const currentDescription = $derived(
     (currentSubteam.description ?? "").trim(),
   );
+
+  // Board roles
   const ceos = $derived(
     team.filter((m) => hasRole(m, ["ceo", "chief executive officer"])),
   );
@@ -76,15 +79,14 @@
     ),
   );
 
-  // Helper: return the matched role from titles, otherwise fallback
-  const pickRole = (titles, preferred) => {
+  const pickRole = (titles: Role | Role[], preferred: Role[]) => {
     if (Array.isArray(titles)) {
       const lower = titles.map((t) => t.toString().trim().toLowerCase());
       const i = preferred.findIndex((p) => lower.includes(p.toLowerCase()));
-      if (i !== -1) return preferred[i]; // return canonical preferred label
-      return titles[0]; // fallback
+      if (i !== -1) return preferred[i];
+      return titles[0];
     }
-    return titles; // string case
+    return titles;
   };
 </script>
 
@@ -168,14 +170,13 @@
 
           <!-- Carousel track: we don't scroll; we translate items -->
           <div class="subteamList">
-            {#each subteam as label, i}
-              <!-- Each item is absolutely positioned via translateX based on ringOffset(i) -->
+            {#each activeSubteams as meta, i}
               <div class="item" style={`--shift:${ringOffset(i)};`}>
                 <Button
                   class={i === selected ? "selected" : ""}
                   onclick={() => select(i)}
                 >
-                  {label.title}
+                  {meta.title}
                 </Button>
               </div>
             {/each}
@@ -192,7 +193,9 @@
         </div>
       </div>
 
-      <h1 class="current">{(subteam[selected].title ?? "").toUpperCase()}</h1>
+      <h1 class="current">
+        {(activeSubteams[selected]?.title ?? "").toUpperCase()}
+      </h1>
 
       <div class="team-container">
         <!-- Heads -->
@@ -231,16 +234,13 @@
 
   <!-- UNDER the grid -->
   {#if currentDescription}
-    <p class="subteam-description" aria-live="polite">
-      {currentDescription}
-    </p>
+    <p class="subteam-description" aria-live="polite">{currentDescription}</p>
   {:else}
     <p
       class="subteam-description subteam-description--empty"
       aria-live="polite"
     >
-      (Add a description for the {currentSubteam.title} subteam in
-      <code>subteams.js</code>.)
+      (Add a description for the {currentSubteam.title} subteam in the catalog.)
     </p>
   {/if}
 </section>

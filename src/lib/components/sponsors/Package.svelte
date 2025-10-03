@@ -52,6 +52,11 @@
       width: 350px; /* fixed width works better */
       overflow: hidden;
       position: relative;
+      transition: transform 0.2s ease;
+
+      &:hover {
+        transform: translateY(-10px) scale(1.03);
+      }
 
       .card-background {
         position: absolute;
@@ -127,6 +132,7 @@
         -webkit-backdrop-filter: blur(20px);
         background: rgba(255, 255, 255, 0.05);
         z-index: 2;
+        cursor: pointer;
       }
 
       .card-top {

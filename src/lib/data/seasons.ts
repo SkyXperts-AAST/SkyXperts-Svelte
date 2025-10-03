@@ -1,5 +1,6 @@
 import type { Person } from "./members";
 import { memberById } from "./members";
+import { SUBTEAM_CATALOG, type SubteamKey, type SubteamMeta } from "./subteams";
 
 export type Role =
   | "Supervisor"
@@ -9,18 +10,11 @@ export type Role =
   | "Member"
   | "CTO"
   | "CEO";
-export type Subteam =
-  | "General"
-  | "Electrical"
-  | "Mechanical"
-  | "Computer Vision"
-  | "Control"
-  | "Media";
 
 export type SeasonMember = {
   personId: string; // references people.ts
   title: Role | Role[]; // supports multi-roles
-  subteam: Subteam | Subteam[]; // supports multi-subteams
+  subteam: SubteamKey | SubteamKey[]; // supports multi-subteams
   tags?: string[]; // season-specific tags if you need
   department?: string;
 };
@@ -30,6 +24,7 @@ export type Season = {
   label: string; // e.g. "Season 2024/2025"
   start?: string; // ISO date if you want timelines
   end?: string;
+  subteams: SubteamKey[];
   roster: SeasonMember[];
 };
 
@@ -39,6 +34,7 @@ export const seasons: Season[] = [
     label: "Season 2024/2025",
     start: "2024-09-01",
     end: "2025-07-01",
+    subteams: ["Electrical", "Mechanical", "Computer Vision", "Control"],
     roster: [
       {
         personId: "moustafa-adly",
@@ -98,6 +94,13 @@ export const seasons: Season[] = [
     label: "Season 2025/2026",
     start: "2025-09-01",
     end: "2026-08-01",
+    subteams: [
+      "Electrical",
+      "Mechanical",
+      "Computer Vision",
+      "Control",
+      "Media", // Media exists this season ✅
+    ],
     roster: [
       {
         personId: "omar-ossama",
@@ -170,6 +173,13 @@ export function getExpandedRoster(seasonId: string) {
       personTags: person?.tags ?? [],
     };
   });
+}
+
+/* NEW: return the subteam *metadata* for the active season */
+export function getActiveSubteams(seasonId: string): SubteamMeta[] {
+  const season = seasons.find((s) => s.id === seasonId);
+  if (!season) return [];
+  return season.subteams.map((k) => SUBTEAM_CATALOG[k]);
 }
 
 // Optional constants to make UI easy:

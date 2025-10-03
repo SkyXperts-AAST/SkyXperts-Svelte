@@ -4,9 +4,9 @@
 
   export let title;
   export let subtitle = "";
-  export let bg; // URL or import
+  export let bg;
   export let bgAlt = "background";
-  export let fontSize = "14rem"; // default maximum label size
+  export let fontSize = "14rem";
   export let showFade = true;
   export let fadeColor = "#00162b";
 
