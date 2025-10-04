@@ -1,4 +1,3 @@
-import type { Person } from "./members";
 import { memberById } from "./members";
 import { SUBTEAM_CATALOG, type SubteamKey, type SubteamMeta } from "./subteams";
 
@@ -11,20 +10,24 @@ export type Role =
   | "CTO"
   | "CEO";
 
+export type Assignment = {
+  subteam: SubteamKey;
+  roles: Role[]; // e.g., ["Head"] or ["Member"]
+};
+
 export type SeasonMember = {
-  personId: string; // references people.ts
-  title: Role | Role[]; // supports multi-roles
-  subteam: SubteamKey | SubteamKey[]; // supports multi-subteams
-  tags?: string[]; // season-specific tags if you need
+  personId: string; // references members.ts
+  assignments: Assignment[]; // 🔥 the only way to assign roles now
+  tags?: string[];
   department?: string;
 };
 
 export type Season = {
-  id: string; // e.g. "2024-25"
+  id: string; // e.g. "24-25"
   label: string; // e.g. "Season 2024/2025"
-  start?: string; // ISO date if you want timelines
+  start?: string; // ISO
   end?: string;
-  subteams: SubteamKey[];
+  subteams: SubteamKey[]; // what tabs exist this season
   roster: SeasonMember[];
 };
 
@@ -34,58 +37,70 @@ export const seasons: Season[] = [
     label: "Season 2024/2025",
     start: "2024-09-01",
     end: "2025-07-01",
-    subteams: ["Electrical", "Mechanical", "Computer Vision", "Control"],
+    subteams: [
+      "Electrical",
+      "Mechanical",
+      "Computer Vision",
+      "Control",
+      "Web Dev",
+    ],
     roster: [
       {
         personId: "moustafa-adly",
-        title: ["CEO"],
-        subteam: "General",
+        assignments: [{ subteam: "General", roles: ["CEO"] }],
       },
       {
         personId: "omar-ossama",
-        title: "Head",
-        subteam: ["Electrical"],
+        assignments: [{ subteam: "Electrical", roles: ["Head"] }],
       },
-      { personId: "abdelrahman-hikal", title: "Head", subteam: "Mechanical" },
+      {
+        personId: "abdelrahman-hikal",
+        assignments: [{ subteam: "Mechanical", roles: ["Head"] }],
+      },
       {
         personId: "fares-fathy",
-        title: ["Head", "CTO"],
-        subteam: ["Computer Vision", "Control"],
+        assignments: [
+          { subteam: "Computer Vision", roles: ["Head"] },
+          { subteam: "Control", roles: ["CTO", "Head"] }, // or Head+CTO if you prefer both
+          { subteam: "Web Dev", roles: ["Head"] },
+        ],
       },
       {
         personId: "habiba-amr",
-        title: "Member",
-        subteam: ["Computer Vision", "Control"],
+        assignments: [
+          { subteam: "Computer Vision", roles: ["Member"] },
+          { subteam: "Control", roles: ["Member"] },
+        ],
       },
       {
         personId: "maya-hossam",
-        title: "Member",
-        subteam: ["Computer Vision", "Control"],
+        assignments: [
+          { subteam: "Computer Vision", roles: ["Member"] },
+          { subteam: "Control", roles: ["Member"] },
+        ],
       },
       {
         personId: "yehia-sharawy",
-        title: "Member",
-        subteam: ["Computer Vision"],
+        assignments: [
+          { subteam: "Computer Vision", roles: ["Member"] },
+          { subteam: "Web Dev", roles: ["Member"] }, // 👈 your requirement
+        ],
       },
       {
         personId: "nour-allam",
-        title: "Member",
-        subteam: ["Computer Vision"],
+        assignments: [{ subteam: "Computer Vision", roles: ["Member"] }],
       },
       {
         personId: "yasmin-ahmed",
-        title: "Member",
-        subteam: ["Computer Vision"],
+        assignments: [{ subteam: "Computer Vision", roles: ["Member"] }],
       },
       {
         personId: "mohamed-nabil",
-        title: "Member",
-        subteam: ["Computer Vision"],
+        assignments: [{ subteam: "Computer Vision", roles: ["Member"] }],
       },
       {
         personId: "yehia-alaa",
-        title: "Member",
-        subteam: ["Mechanical"],
+        assignments: [{ subteam: "Mechanical", roles: ["Member"] }],
       },
     ],
   },
@@ -99,73 +114,116 @@ export const seasons: Season[] = [
       "Mechanical",
       "Computer Vision",
       "Control",
-      "Media", // Media exists this season ✅
+      "Media",
+      "Web Dev",
     ],
     roster: [
       {
         personId: "omar-ossama",
-        title: ["Head", "CEO"],
-        subteam: ["Electrical"],
+        assignments: [{ subteam: "Electrical", roles: ["Head", "CEO"] }],
       },
-      { personId: "fares-fathy", title: "CTO", subteam: "General" },
-      { personId: "abdelrahman-hikal", title: "Head", subteam: "Mechanical" },
+      {
+        personId: "fares-fathy",
+        assignments: [{ subteam: "General", roles: ["CTO"] }],
+      },
+      {
+        personId: "abdelrahman-hikal",
+        assignments: [{ subteam: "Mechanical", roles: ["Head"] }],
+      },
       {
         personId: "habiba-amr",
-        title: "Head",
-        subteam: ["Computer Vision", "Control"],
+        assignments: [
+          { subteam: "Computer Vision", roles: ["Head"] },
+          { subteam: "Control", roles: ["Head"] },
+        ],
       },
       {
         personId: "maya-hossam",
-        title: "Co-Head",
-        subteam: ["Computer Vision", "Control"],
+        assignments: [
+          { subteam: "Computer Vision", roles: ["Co-Head"] },
+          { subteam: "Control", roles: ["Co-Head"] },
+        ],
       },
       {
         personId: "yehia-sharawy",
-        title: "Member",
-        subteam: ["Computer Vision", "Mechanical", "Control"],
+        assignments: [
+          { subteam: "Computer Vision", roles: ["Member"] },
+          { subteam: "Web Dev", roles: ["Head"] },
+          { subteam: "Control", roles: ["Member"] },
+        ],
       },
       {
         personId: "yehia-alaa",
-        title: "Member",
-        subteam: ["Media", "Mechanical", "Electrical", "Control"],
+        assignments: [
+          { subteam: "Media", roles: ["Member"] },
+          { subteam: "Mechanical", roles: ["Member"] },
+          { subteam: "Electrical", roles: ["Member"] },
+          { subteam: "Control", roles: ["Member"] },
+        ],
       },
     ],
   },
 ];
 
-export const permanentRoster = [
+export const permanentRoster: SeasonMember[] = [
   {
     personId: "prof-mohamed-abo-el-azm",
-    title: "Supervisor",
-    subteam: "General",
     tags: ["Dean of Student Affairs"],
+    assignments: [{ subteam: "General", roles: ["Supervisor"] }],
   },
-  { personId: "mohamed-ragab", title: "Mentor", subteam: "General" },
-  { personId: "omar-aman", title: "Mentor", subteam: "General" },
-  { personId: "youssef-mehanna", title: "Mentor", subteam: "General" },
-  { personId: "ahmed-mohamed", title: "Mentor", subteam: "General" },
-  { personId: "osama-hesham", title: "Mentor", subteam: "General" },
-  { personId: "belal-abo-elkheir", title: "Mentor", subteam: "General" },
+  {
+    personId: "mohamed-ragab",
+    assignments: [{ subteam: "General", roles: ["Mentor"] }],
+  },
+  {
+    personId: "omar-aman",
+    assignments: [{ subteam: "General", roles: ["Mentor"] }],
+  },
+  {
+    personId: "youssef-mehanna",
+    assignments: [{ subteam: "General", roles: ["Mentor"] }],
+  },
+  {
+    personId: "ahmed-mohamed",
+    assignments: [{ subteam: "General", roles: ["Mentor"] }],
+  },
+  {
+    personId: "osama-hesham",
+    assignments: [{ subteam: "General", roles: ["Mentor"] }],
+  },
+  {
+    personId: "belal-abo-elkheir",
+    assignments: [{ subteam: "General", roles: ["Mentor"] }],
+  },
   {
     personId: "aya-ashraf",
-    title: ["Head", "Mentor"],
-    subteam: ["General", "Media"],
+    assignments: [
+      { subteam: "General", roles: ["Head", "Mentor"] },
+      { subteam: "Media", roles: ["Head", "Mentor"] },
+    ],
   },
-  { personId: "moustafa-adly", title: "Mentor", subteam: "General" },
-  { personId: "fares-fathy", title: "Mentor", subteam: "General" },
-  { personId: "abdelrahman-hikal", title: "Mentor", subteam: "Mechanical" },
+  {
+    personId: "moustafa-adly",
+    assignments: [{ subteam: "General", roles: ["Mentor"] }],
+  },
+  {
+    personId: "fares-fathy",
+    assignments: [{ subteam: "General", roles: ["Mentor"] }],
+  },
+  {
+    personId: "abdelrahman-hikal",
+    assignments: [{ subteam: "Mechanical", roles: ["Mentor"] }],
+  },
 ];
 
-// Utility: expand a season roster by pulling person info
+// Expand a season roster by pulling person info
 export function getExpandedRoster(seasonId: string) {
   const season = seasons.find((s) => s.id === seasonId);
   if (!season) return [];
-
   return [...permanentRoster, ...season.roster].map((slot) => {
-    const person = memberById[slot.personId];
+    const person = memberById[slot.personId] as Partial<Person> | undefined;
     return {
       ...slot,
-      // Merge in person info; UI can use these directly
       name: person?.name ?? slot.personId,
       department: person?.department ?? "",
       linkedin: person?.linkedin ?? "",
@@ -175,13 +233,33 @@ export function getExpandedRoster(seasonId: string) {
   });
 }
 
-/* NEW: return the subteam *metadata* for the active season */
+/** Active subteams (metadata) for the chosen season */
 export function getActiveSubteams(seasonId: string): SubteamMeta[] {
   const season = seasons.find((s) => s.id === seasonId);
   if (!season) return [];
   return season.subteams.map((k) => SUBTEAM_CATALOG[k]);
 }
 
-// Optional constants to make UI easy:
+/** Role helpers (per selected subteam) */
+const norm = (s: unknown) => (s ?? "").toString().trim().toLowerCase();
+
+export function rolesInSubteam(
+  member: ReturnType<typeof getExpandedRoster>[number],
+  sub: SubteamKey,
+): Role[] {
+  return (member.assignments ?? [])
+    .filter((a) => norm(a.subteam) === norm(sub))
+    .flatMap((a) => a.roles);
+}
+
+export function hasRoleInSubteam(
+  member: ReturnType<typeof getExpandedRoster>[number],
+  sub: SubteamKey,
+  roles: Role[],
+): boolean {
+  const r = rolesInSubteam(member, sub).map(norm);
+  return roles.some((wanted) => r.includes(norm(wanted)));
+}
+
 export const CURRENT_SEASON_ID = "24-25";
 export const ALL_SEASON_IDS = seasons.map((s) => s.id);

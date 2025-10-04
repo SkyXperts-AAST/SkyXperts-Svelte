@@ -1,31 +1,29 @@
 <script lang="ts">
   import defaultImg from "$lib/assets/Team/default.webp";
   import Button from "$lib/components/Button.svelte";
+  import type { SubteamKey } from "$lib/data/subteams";
 
   import {
     CURRENT_SEASON_ID,
     getExpandedRoster,
     getActiveSubteams,
     ALL_SEASON_IDS,
+    hasRoleInSubteam,
+    rolesInSubteam,
+    type Role,
   } from "$lib/data/seasons";
 
-  // If you still need the catalog (e.g., for titles/descriptions), you can import it too
-  // import { SUBTEAM_CATALOG } from "$lib/data/subteams";
-
-  // --- state derived from the chosen season ---
+  // --- state ---
   let seasonId = $state(CURRENT_SEASON_ID);
 
   const team = $derived(getExpandedRoster(seasonId));
-  const activeSubteams = $derived(getActiveSubteams(seasonId)); // <— replaces static `subteam`
+  const activeSubteams = $derived(getActiveSubteams(seasonId));
 
-  // --- carousel state ---
+  // carousel
   let selected = $state(0);
   const n = $derived(activeSubteams.length);
-
-  // Reset selection if season changes or there are fewer tabs
   $effect(() => {
-    // touch dependencies:
-    const _ = n + seasonId;
+    const _ = seasonId + n;
     if (selected >= n) selected = 0;
   });
 
@@ -36,66 +34,53 @@
   const prev = () => select(selected - 1);
   const next = () => select(selected + 1);
 
-  // ---- filtering helpers (unchanged) ----
-  const norm = (s: unknown) => (s ?? "").toString().trim().toLowerCase();
-  const titlesOf = (m: any) =>
-    Array.isArray(m.title) ? m.title.map(norm) : [norm(m.title)];
-  const hasRole = (m: any, roles: string[]) => {
-    const set = titlesOf(m);
-    return roles.some((r) => set.includes(norm(r)));
-  };
+  // current subteam key/title/description
+  const current = $derived(
+    activeSubteams[selected] ?? {
+      key: "" as SubteamKey,
+      title: "",
+      description: "",
+    },
+  );
+  const currentKey = $derived(current.key as SubteamKey);
 
-  // Selected subteam title (normalized)
-  const currentTitle = $derived(norm(activeSubteams[selected]?.title));
-
-  // Filter the active team to the selected subteam
+  // filter within the selected subteam
   const filteredTeam = $derived(
-    team.filter((member) => {
-      const v = member.subteam;
-      if (Array.isArray(v)) return v.map(norm).includes(currentTitle);
-      return norm(v) === currentTitle;
-    }),
+    team.filter((m) => rolesInSubteam(m, currentKey).length > 0),
   );
 
-  // Provide description for the selected subteam (season-aware)
-  const currentSubteam = $derived(
-    activeSubteams[selected] ?? { title: "", description: "" },
-  );
-  const currentDescription = $derived(
-    (currentSubteam.description ?? "").trim(),
-  );
-
-  // Board roles
-  const ceos = $derived(
-    team.filter((m) => hasRole(m, ["ceo", "chief executive officer"])),
-  );
-  const ctos = $derived(
-    team.filter((m) =>
-      hasRole(m, [
-        "cto",
-        "chief technology officer",
-        "chief technical officer",
-      ]),
+  const heads = $derived(
+    filteredTeam.filter((m) =>
+      hasRoleInSubteam(m, currentKey, ["Head", "Co-Head"]),
     ),
   );
 
-  const pickRole = (titles: Role | Role[], preferred: Role[]) => {
-    if (Array.isArray(titles)) {
-      const lower = titles.map((t) => t.toString().trim().toLowerCase());
-      const i = preferred.findIndex((p) => lower.includes(p.toLowerCase()));
-      if (i !== -1) return preferred[i];
-      return titles[0];
-    }
-    return titles;
+  const members = $derived(
+    filteredTeam.filter((m) => hasRoleInSubteam(m, currentKey, ["Member"])),
+  );
+
+  // Optional: global board (across subteams) — keep if you like
+  const norm = (s: unknown) => (s ?? "").toString().trim().toLowerCase();
+  const titlesOf = (m: any) =>
+    (m.assignments ?? []).flatMap((a: any) => a.roles.map(norm));
+  const hasAnyRole = (m: any, roles: string[]) => {
+    const set = titlesOf(m);
+    return roles.some((r) => set.includes(norm(r)));
+  };
+  const ceos = $derived(team.filter((m) => hasAnyRole(m, ["ceo"])));
+  const ctos = $derived(team.filter((m) => hasAnyRole(m, ["cto"])));
+
+  const pickRole = (roles: Role[], preferred: Role[]) => {
+    const lower = roles.map((t) => t.toLowerCase());
+    const i = preferred.findIndex((p) => lower.includes(p.toLowerCase()));
+    return i !== -1 ? preferred[i] : roles[0];
   };
 </script>
 
 <section class="layout">
-  <!-- <div class="line" style={`background-image:url('${wallImg}')`}></div> -->
   <div class="layout-grid">
     <!-- LEFT: season switcher -->
     <div class="sidebar">
-      <!-- <div class="line" style={`background-image:url('${wallImg}')`}></div> -->
       <div class="season-switcher">
         <label>
           &#10097; See All Seasons &#10096;
@@ -124,7 +109,10 @@
                 <ul>
                   <li>{board.name}</li>
                   <li>
-                    {pickRole(board.title, ["CEO"])}
+                    {pickRole(
+                      board.assignments.flatMap((a) => a.roles),
+                      ["CEO"],
+                    )}
                   </li>
                   <li>{board.department}</li>
                 </ul>
@@ -141,7 +129,10 @@
                 <ul>
                   <li>{board.name}</li>
                   <li>
-                    {pickRole(board.title, ["CTO"])}
+                    {pickRole(
+                      board.assignments.flatMap((a) => a.roles),
+                      ["CTO"],
+                    )}
                   </li>
                   <li>{board.department}</li>
                 </ul>
@@ -193,21 +184,24 @@
         </div>
       </div>
 
-      <h1 class="current">
-        {(activeSubteams[selected]?.title ?? "").toUpperCase()}
-      </h1>
+      <h1 class="current">{(current.title ?? "").toUpperCase()}</h1>
 
       <div class="team-container">
         <!-- Heads -->
         <div class="heads-container">
-          {#each filteredTeam.filter( (m) => hasRole( m, ["head", "co-head"], ), ) as head}
+          {#each heads as head}
             <span class="member">
               <div class="head-card">
                 <img src={head.src || defaultImg} alt={head.name} />
               </div>
               <ul>
                 <li>{head.name}</li>
-                <li>{pickRole(head.title, ["Head", "Co-Head"])}</li>
+                <li>
+                  {pickRole(rolesInSubteam(head, currentKey), [
+                    "Head",
+                    "Co-Head",
+                  ])}
+                </li>
                 <li>{head.department}</li>
               </ul>
             </span>
@@ -215,14 +209,16 @@
         </div>
         <div class="members-container">
           <!-- Non-head members -->
-          {#each filteredTeam.filter((m) => hasRole(m, ["member"])) as member}
+          {#each members as member}
             <span class="member">
               <div class="head-card">
                 <img src={member.src || defaultImg} alt={member.name} />
               </div>
               <ul>
                 <li>{member.name}</li>
-                <li>{pickRole(member.title, ["Member"])}</li>
+                <li>
+                  {pickRole(rolesInSubteam(member, currentKey), ["Member"])}
+                </li>
                 <li>{member.department}</li>
               </ul>
             </span>
@@ -233,14 +229,15 @@
   </div>
 
   <!-- UNDER the grid -->
-  {#if currentDescription}
-    <p class="subteam-description" aria-live="polite">{currentDescription}</p>
+  {#if current.description}
+    <p class="subteam-description" aria-live="polite">{current.description}</p>
   {:else}
     <p
       class="subteam-description subteam-description--empty"
       aria-live="polite"
     >
-      (Add a description for the {currentSubteam.title} subteam in the catalog.)
+      (Add a description for the {current.title} subteam in
+      <code>subteams.ts</code>.)
     </p>
   {/if}
 </section>

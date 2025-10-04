@@ -1,5 +1,14 @@
-<script>
-  import subteam from "$lib/subteams.js";
+<script lang="ts">
+  import { CURRENT_SEASON_ID, getActiveSubteams } from "$lib/data/seasons";
+
+  // Current season
+  let currentSeasonId = $state(CURRENT_SEASON_ID);
+
+  // Get all active subteams for the chosen season
+  const activeSubteams = $derived(getActiveSubteams(currentSeasonId));
+
+  // Helper to safely access subteam titles
+  const getSubteamTitle = (index: number) => activeSubteams[index]?.title ?? "";
 </script>
 
 <section class="join">
@@ -7,19 +16,32 @@
     <h2>Become a Team <br /> Member</h2>
 
     <div class="subteams">
-      <span class="pair">
-        <h1>{subteam[0].title}</h1>
-        <h3 aria-hidden="true">-</h3>
-        <h1>{subteam[1].title}</h1>
-      </span>
+      <!-- First pair -->
+      {#if getSubteamTitle(0) || getSubteamTitle(1)}
+        <span class="pair">
+          {#if getSubteamTitle(0)}<h1>{getSubteamTitle(0)}</h1>{/if}
+          {#if getSubteamTitle(0) && getSubteamTitle(1)}<h3 aria-hidden="true">
+              -
+            </h3>{/if}
+          {#if getSubteamTitle(1)}<h1>{getSubteamTitle(1)}</h1>{/if}
+        </span>
+      {/if}
 
-      <h1 class="solo">{subteam[2].title}</h1>
+      <!-- Middle solo -->
+      {#if getSubteamTitle(2)}
+        <h1 class="solo">{getSubteamTitle(2)}</h1>
+      {/if}
 
-      <span class="pair">
-        <h1>{subteam[3].title}</h1>
-        <h3 aria-hidden="true">-</h3>
-        <h1>{subteam[4].title}</h1>
-      </span>
+      <!-- Second pair -->
+      {#if getSubteamTitle(3) || getSubteamTitle(4)}
+        <span class="pair">
+          {#if getSubteamTitle(3)}<h1>{getSubteamTitle(3)}</h1>{/if}
+          {#if getSubteamTitle(3) && getSubteamTitle(4)}<h3 aria-hidden="true">
+              -
+            </h3>{/if}
+          {#if getSubteamTitle(4)}<h1>{getSubteamTitle(4)}</h1>{/if}
+        </span>
+      {/if}
     </div>
   </div>
 </section>
@@ -62,14 +84,12 @@
     font-variation-settings: "wght" 220;
   }
 
-  /* Subteams block stays in normal flow; grid manages wrapping neatly */
   .subteams {
     display: grid;
     row-gap: var(--y-gap);
     width: 100%;
   }
 
-  /* Each row/pair uses inline grid so dash stays centered between titles */
   .pair {
     display: inline-grid;
     grid-auto-flow: column;
@@ -80,11 +100,9 @@
   }
 
   .solo {
-    /* keeps the single title visually balanced between pairs */
     justify-self: center;
   }
 
-  /* Typography sizing that won’t blow the layout on small screens */
   .subteams h1,
   .subteams h3 {
     color: rgba(255, 255, 255, 0.7);
@@ -97,6 +115,7 @@
     text-wrap: balance;
     transition: color 160ms ease;
   }
+
   .subteams h1:hover {
     color: white;
   }
@@ -106,14 +125,14 @@
     font-weight: 400;
   }
 
-  /* Small screens: allow pairs to wrap if titles get long */
   @media (max-width: 560px) {
     .pair {
       grid-auto-flow: row;
       row-gap: 0.25rem;
     }
+
     .subteams h3 {
       display: none;
-    } /* optional: hide dash when stacked */
+    }
   }
 </style>
