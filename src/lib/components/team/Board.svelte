@@ -1,27 +1,59 @@
 <script lang="ts">
   import ArcCarousel from "$lib/components/team/ArcCarousel.svelte";
-  import { permanentRoster } from "$lib/data/seasons";
+  import { permanentRoster, type Role } from "$lib/data/seasons";
   import { memberById } from "$lib/data/members";
 
-  const expanded = (permanentRoster ?? []).map((slot) => {
-    const p = memberById[slot.personId] ?? {};
+  // Which leadership roles to show in this carousel
+  const LEADERSHIP_ROLES: Role[] = ["Mentor", "Supervisor"];
+
+  // Merge static person data from members with permanentRoster assignments
+  const expandedPermanent = (permanentRoster ?? []).map((slot) => {
+    const person = memberById[slot.personId] ?? {};
     return {
       ...slot,
-      name: p.name ?? slot.personId,
-      src: p.src ?? "",
-      department: p?.department ?? "",
+      name: person.name ?? slot.personId,
+      src: person.src ?? "",
+      department: person?.department ?? "",
+      personTags: person?.tags ?? [],
     };
   });
 
-  const items = expanded.map((m) => ({
-    name: m.name,
-    image: m.src,
-    href: `/team/${m.personId}`,
-    title: m.title, // NEW
-    tags: m.tags ?? [], // NEW (array)
-    subteam: m.subteam ?? "", // optional: string | string[]
-    department: m.department ?? "",
-  }));
+  // Build ArcCarousel items for Mentors and Supervisors
+  const items = expandedPermanent
+    // keep only people who have any of the target roles
+    .filter((member) =>
+      (member.assignments ?? []).some((assignment) =>
+        assignment.roles.some((role) => LEADERSHIP_ROLES.includes(role)),
+      ),
+    )
+    .map((member) => {
+      // find which roles they have (intersection with target roles)
+      const matchedRoles = (member.assignments ?? [])
+        .flatMap((assignment) => assignment.roles)
+        .filter((role) => LEADERSHIP_ROLES.includes(role));
+
+      // find which subteams they serve in for those roles
+      const leadershipSubteams = (member.assignments ?? [])
+        .filter((assignment) =>
+          assignment.roles.some((role) => LEADERSHIP_ROLES.includes(role)),
+        )
+        .map((assignment) => assignment.subteam);
+
+      // pick a display title (Supervisor takes priority over Mentor)
+      const displayRole = matchedRoles.includes("Supervisor")
+        ? "Supervisor"
+        : "Mentor";
+
+      return {
+        name: member.name,
+        image: member.src,
+        href: `/team/${member.personId}`,
+        title: displayRole,
+        tags: member.tags ?? member.personTags ?? [],
+        subteam: leadershipSubteams, // use .join(", ") if ArcCarousel expects a string
+        department: member.department ?? "",
+      };
+    });
 </script>
 
 <section>

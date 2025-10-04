@@ -60,8 +60,9 @@ export const seasons: Season[] = [
       {
         personId: "fares-fathy",
         assignments: [
+          { subteam: "General", roles: ["CTO"] },
           { subteam: "Computer Vision", roles: ["Head"] },
-          { subteam: "Control", roles: ["CTO", "Head"] }, // or Head+CTO if you prefer both
+          { subteam: "Control", roles: ["Head"] },
           { subteam: "Web Dev", roles: ["Head"] },
         ],
       },
@@ -83,7 +84,7 @@ export const seasons: Season[] = [
         personId: "yehia-sharawy",
         assignments: [
           { subteam: "Computer Vision", roles: ["Member"] },
-          { subteam: "Web Dev", roles: ["Member"] }, // 👈 your requirement
+          { subteam: "Web Dev", roles: ["Member"] },
         ],
       },
       {
@@ -120,7 +121,10 @@ export const seasons: Season[] = [
     roster: [
       {
         personId: "omar-ossama",
-        assignments: [{ subteam: "Electrical", roles: ["Head", "CEO"] }],
+        assignments: [
+          { subteam: "General", roles: ["CEO"] },
+          { subteam: "Electrical", roles: ["Head"] },
+        ],
       },
       {
         personId: "fares-fathy",
