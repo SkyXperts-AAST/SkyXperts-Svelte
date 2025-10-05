@@ -149,6 +149,7 @@ export const seasons: Season[] = [
         assignments: [
           { subteam: "Computer Vision", roles: ["Head"] },
           { subteam: "Control", roles: ["Head"] },
+          { subteam: "Media", roles: ["Head"] },
         ],
       },
       {
@@ -163,6 +164,7 @@ export const seasons: Season[] = [
         assignments: [
           { subteam: "Computer Vision", roles: ["Member"] },
           { subteam: "Web Dev", roles: ["Head"] },
+          { subteam: "Media", roles: ["Head"] },
         ],
       },
       {
@@ -209,8 +211,8 @@ export const permanentRoster: SeasonMember[] = [
   {
     personId: "aya-ashraf",
     assignments: [
-      { subteam: "General", roles: ["Head", "Mentor"] },
-      { subteam: "Media", roles: ["Head", "Mentor"] },
+      { subteam: "General", roles: ["Mentor"] },
+      { subteam: "Media", roles: ["Head"] },
     ],
   },
   {
