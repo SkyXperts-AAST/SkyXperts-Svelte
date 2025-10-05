@@ -75,16 +75,18 @@ export const seasons: Season[] = [
       },
       {
         personId: "maya-hossam",
+        assignments: [{ subteam: "Computer Vision", roles: ["Member"] }],
+      },
+      {
+        personId: "asmaa-ebeid",
         assignments: [
           { subteam: "Computer Vision", roles: ["Member"] },
+          { subteam: "Control", roles: ["Member"] },
         ],
       },
       {
-        personId: "yehia-sharawy",
-        assignments: [
-          { subteam: "Computer Vision", roles: ["Member"] },
-          { subteam: "Web Dev", roles: ["Member"] },
-        ],
+        personId: "mohamed-nabil",
+        assignments: [{ subteam: "Computer Vision", roles: ["Member"] }],
       },
       {
         personId: "nour-allam",
@@ -101,8 +103,11 @@ export const seasons: Season[] = [
         ],
       },
       {
-        personId: "mohamed-nabil",
-        assignments: [{ subteam: "Computer Vision", roles: ["Member"] }],
+        personId: "yehia-sharawy",
+        assignments: [
+          { subteam: "Computer Vision", roles: ["Member"] },
+          { subteam: "Web Dev", roles: ["Member"] },
+        ],
       },
       {
         personId: "yehia-alaa",
@@ -218,7 +223,7 @@ export const permanentRoster: SeasonMember[] = [
   },
   {
     personId: "abdelrahman-hikal",
-    assignments: [{ subteam: "Mechanical", roles: ["Mentor"] }],
+    assignments: [{ subteam: "General", roles: ["Mentor"] }],
   },
 ];
 

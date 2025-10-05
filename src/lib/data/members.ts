@@ -29,9 +29,10 @@ import MayaHossamImg from "$lib/assets/Team/Heads/Maya-Hossam.jpg";
 //Members
 import YehiaSharawyImg from "$lib/assets/Team/Members/Yehia-Sharawy.jpeg";
 import YehiaAlaaImg from "$lib/assets/Team/Members/Yehia-Alaa.jpeg";
-import NourAllamImg from "$lib/assets/Team/Members/nour-allam.jpg";
-import YasminAhmedImg from "$lib/assets/Team/Members/yasmin-ahmed.jpg";
-
+import NourAllamImg from "$lib/assets/Team/Members/Nour-Allam.jpg";
+import YasminAhmedImg from "$lib/assets/Team/Members/Yasmin-Ahmed.jpg";
+import MohamedNabilImg from "$lib/assets/Team/Members/Mohamed-Nabil.jpeg";
+import AsmaaEbeidImg from "$lib/assets/Team/Members/Asmaa-Ebeid.jpeg";
 
 export const members: Person[] = [
   {
@@ -111,6 +112,7 @@ export const members: Person[] = [
     id: "mohamed-nabil",
     name: "Mohamed Nabil",
     department: "Computer Engineering",
+    src: MohamedNabilImg,
   },
   {
     id: "habiba-amr",
@@ -136,7 +138,12 @@ export const members: Person[] = [
     department: "Computer Engineering",
     src: YasminAhmedImg,
   },
-
+  {
+    id: "asmaa-ebeid",
+    name: "Asmaa Ebeid",
+    department: "Mechanical Engineering",
+    src: AsmaaEbeidImg,
+  },
   {
     id: "yehia-sharawy",
     name: "Yehia Sharawy",

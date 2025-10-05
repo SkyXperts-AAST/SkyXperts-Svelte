@@ -21,7 +21,7 @@ export const PACKAGE_PLANS: PackagePlan[] = [
   },
   {
     name: "Gold Partner",
-    price: "$1500",
+    price: "$1000",
     benefits: {
       "Post on Facebook, Instagram & LinkedIn": true,
       "Distribute stickers, and pins in events": true,
@@ -35,7 +35,7 @@ export const PACKAGE_PLANS: PackagePlan[] = [
   },
   {
     name: "Platinum Partner",
-    price: "$3000+",
+    price: "$1500+",
     benefits: {
       "Post on Facebook, Instagram & LinkedIn": true,
       "Distribute stickers, and pins in events": true,

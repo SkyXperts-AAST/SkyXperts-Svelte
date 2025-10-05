@@ -20,7 +20,7 @@
   const activeSubteams = $derived(getActiveSubteams(seasonId));
 
   // carousel
-  let selected = $state(0);
+  let selected = $state(2);
   const n = $derived(activeSubteams.length);
   $effect(() => {
     const _ = seasonId + n;

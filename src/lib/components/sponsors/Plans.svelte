@@ -1,5 +1,6 @@
 <script>
   import Package from "$lib/components/sponsors/Package.svelte";
+  import Button from "$lib/components/Button.svelte";
 </script>
 
 <main>
@@ -8,6 +9,8 @@
   <span class="packages">
     <Package />
   </span>
+  <!-- <h3>Don't see a package that perfectly aligns with your company's goals?</h3>
+  <Button>Contact Us</Button> -->
 </main>
 
 <style>
@@ -26,6 +29,13 @@
       font-synthesis: none;
       margin: 0;
     }
+    h3 {
+      color: white;
+      font-size: 2rem;
+      font-synthesis: none;
+      margin: 0;
+      margin-bottom: 2rem;
+    }
 
     .title {
       position: absolute;
@@ -37,6 +47,7 @@
     }
     .packages {
       margin-top: 9rem;
+      margin-bottom: 3rem;
     }
 
     @media (max-width: 900px) {
