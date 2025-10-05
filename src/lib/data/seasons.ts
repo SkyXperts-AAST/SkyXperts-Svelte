@@ -17,7 +17,7 @@ export type Assignment = {
 
 export type SeasonMember = {
   personId: string; // references members.ts
-  assignments: Assignment[]; // 🔥 the only way to assign roles now
+  assignments: Assignment[];
   tags?: string[];
   department?: string;
 };
