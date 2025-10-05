@@ -93,7 +93,7 @@
       </div>
     </div>
 
-    <!-- RIGHT: everything else (title stays absolute inside this box) -->
+    <!-- RIGHT: everything else-->
     <div class="main">
       <div class="board-list">
         <h2>Board</h2>
