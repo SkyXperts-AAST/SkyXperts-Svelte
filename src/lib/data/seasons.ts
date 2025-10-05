@@ -77,7 +77,6 @@ export const seasons: Season[] = [
         personId: "maya-hossam",
         assignments: [
           { subteam: "Computer Vision", roles: ["Member"] },
-          { subteam: "Control", roles: ["Member"] },
         ],
       },
       {
@@ -89,11 +88,17 @@ export const seasons: Season[] = [
       },
       {
         personId: "nour-allam",
-        assignments: [{ subteam: "Computer Vision", roles: ["Member"] }],
+        assignments: [
+          { subteam: "Computer Vision", roles: ["Member"] },
+          { subteam: "Control", roles: ["Member"] },
+        ],
       },
       {
         personId: "yasmin-ahmed",
-        assignments: [{ subteam: "Computer Vision", roles: ["Member"] }],
+        assignments: [
+          { subteam: "Computer Vision", roles: ["Member"] },
+          { subteam: "Control", roles: ["Member"] },
+        ],
       },
       {
         personId: "mohamed-nabil",
@@ -127,7 +132,7 @@ export const seasons: Season[] = [
         ],
       },
       {
-        personId: "fares-fathy",
+        personId: "habiba-amr",
         assignments: [{ subteam: "General", roles: ["CTO"] }],
       },
       {
@@ -153,7 +158,6 @@ export const seasons: Season[] = [
         assignments: [
           { subteam: "Computer Vision", roles: ["Member"] },
           { subteam: "Web Dev", roles: ["Head"] },
-          { subteam: "Control", roles: ["Member"] },
         ],
       },
       {
@@ -161,8 +165,6 @@ export const seasons: Season[] = [
         assignments: [
           { subteam: "Media", roles: ["Member"] },
           { subteam: "Mechanical", roles: ["Member"] },
-          { subteam: "Electrical", roles: ["Member"] },
-          { subteam: "Control", roles: ["Member"] },
         ],
       },
     ],

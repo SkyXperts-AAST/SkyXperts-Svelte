@@ -29,6 +29,9 @@ import MayaHossamImg from "$lib/assets/Team/Heads/Maya-Hossam.jpg";
 //Members
 import YehiaSharawyImg from "$lib/assets/Team/Members/Yehia-Sharawy.jpeg";
 import YehiaAlaaImg from "$lib/assets/Team/Members/Yehia-Alaa.jpeg";
+import NourAllamImg from "$lib/assets/Team/Members/nour-allam.jpg";
+import YasminAhmedImg from "$lib/assets/Team/Members/yasmin-ahmed.jpg";
+
 
 export const members: Person[] = [
   {
@@ -124,13 +127,16 @@ export const members: Person[] = [
   {
     id: "nour-allam",
     name: "Nour Allam",
-    department: "Mechanical Engineering",
+    department: "Computer Engineering",
+    src: NourAllamImg,
   },
   {
     id: "yasmin-ahmed",
     name: "Yasmin Ahmed",
     department: "Computer Engineering",
+    src: YasminAhmedImg,
   },
+
   {
     id: "yehia-sharawy",
     name: "Yehia Sharawy",
