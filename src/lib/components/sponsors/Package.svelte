@@ -137,6 +137,7 @@
 
       .card-top {
         padding-bottom: 0;
+        /*border-radius: 1.5rem 1.5rem 0 0;*/
 
         h2 {
           font-size: 3rem;
@@ -154,6 +155,7 @@
         }
       }
       .card-bottom {
+        /*border-radius: 0 0 1.5rem 1.5rem;*/
         .benefit {
           display: flex;
           align-items: flex-start;

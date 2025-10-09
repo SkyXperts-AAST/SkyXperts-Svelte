@@ -55,6 +55,20 @@ export type SponsorSection = {
 // Sponsors
 export const sponsorSections: SponsorSection[] = [
   {
+    sectionTitle: "Fund Sponsors",
+    sponsors: [
+      {
+        name: "AAST",
+        image: AASTImg,
+        alt: "AAST Logo",
+        link: "https://aast.edu/en/",
+        description:
+          "AAST had many achievements in education, training and research in the fields of maritime transport, engineering and management sciences. This is due to the methodological application of modern technology in these fields.",
+        tier: "fund",
+      },
+    ],
+  },
+  {
     sectionTitle: "Technical Sponsors",
     sponsors: [
       {
@@ -72,20 +86,6 @@ export const sponsorSections: SponsorSection[] = [
         link: "https://www.solidworks.com/",
         description: "The Solution for 3D CAD, Design and Product Development",
         tier: "technical",
-      },
-    ],
-  },
-  {
-    sectionTitle: "Fund Sponsors",
-    sponsors: [
-      {
-        name: "AAST",
-        image: AASTImg,
-        alt: "AAST Logo",
-        link: "https://aast.edu/en/",
-        description:
-          "AAST had many achievements in education, training and research in the fields of maritime transport, engineering and management sciences. This is due to the methodological application of modern technology in these fields.",
-        tier: "fund",
       },
     ],
   },

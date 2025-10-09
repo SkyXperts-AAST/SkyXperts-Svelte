@@ -9,31 +9,47 @@
 </script>
 
 <main>
-  <h2>Current Sponsors</h2>
+  <span class="title">
+    <div class="left">
+      <h2>Special thanks to our sponsors</h2>
+    </div>
+    <p>
+      Meet the sponsors bringing Sky<span style="color:rgba(255,0,0,0.8)"
+        >X</span
+      >perts to life! <br />Click their profiles to learn more.
+    </p>
+  </span>
 
-  {#each sponsorSections as section}
-    <section class="sponsor-section">
-      <h3>{section.sectionTitle}</h3>
-
-      <div class="sponsor-cards">
-        {#each section.sponsors as sponsor}
-          <div
-            class="sponsor-card {sponsor.tier}"
-            on:click={() => toggleTooltip(sponsor.name)}
+  <section class="sponsor-section">
+    {#each sponsorSections as section}
+      <div class="sponsor-block">
+        <h2 class="section-title">
+          <span style="color:#dc0d40">❱ </span>{section.sectionTitle}<span
+            style="color:#dc0d40"
           >
-            <img src={sponsor.image} alt={sponsor.alt} />
-            <p>{sponsor.name}</p>
+            ❰</span
+          >
+        </h2>
 
-            {#if activeCard === sponsor.name}
-              <div class="tooltip">
-                {sponsor.description}
-              </div>
-            {/if}
-          </div>
-        {/each}
+        <div class="sponsor-cards">
+          {#each section.sponsors as sponsor}
+            <article class="sponsor-card {sponsor.tier}">
+              <div class="sponsor-background"></div>
+              <a class="sponsor-name" href={sponsor.link}
+                >{sponsor.name}<svg width="24" height="24" fill="currentColor"
+                  ><path
+                    d="M7 7h8.586L5.293 17.293l1.414 1.414L17 8.414V17h2V5H7v2z"
+                  /></svg
+                ></a
+              >
+              <p class="sponsor-desc">{sponsor.description}</p>
+              <img class="sponsor-img" src={sponsor.image} alt={sponsor.alt} />
+            </article>
+          {/each}
+        </div>
       </div>
-    </section>
-  {/each}
+    {/each}
+  </section>
 </main>
 
 <style>
@@ -41,29 +57,161 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+    /*align-items: center;*/
     min-height: 100svh;
     width: 100%;
     color: white;
+    padding: 0 5rem;
   }
 
-  h2 {
-    font-size: clamp(2rem, -13rem + 26.6667vw, 7rem);
-    margin-bottom: 2rem;
-    font-synthesis: none;
+  .title {
+    display: grid;
+    gap: 1.5rem;
+    align-items: center;
+    justify-items: end;
+    grid-template-columns: 1fr auto;
+
+    .left {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      /*padding-left: 5rem;*/
+      width: 100%;
+
+      h2 {
+        font-size: clamp(2.5rem, -13rem + 26.6667vw, 7rem);
+        margin: 0;
+        font-synthesis: none;
+        line-height: initial;
+      }
+    }
+    p {
+      color: rgba(255, 255, 255, 0.8);
+      font-size: clamp(1.2rem, -0.3rem + 2.6667vw, 1.7rem);
+    }
   }
+  @media (max-width: 900px) {
+    .title {
+      grid-template-columns: 1fr;
 
-  .sponsor-section {
-    margin-bottom: 3rem;
-    text-align: center;
-
-    h3 {
-      font-size: 2rem;
-      margin-bottom: 1rem;
+      .left {
+        padding-left: 0;
+        h2 {
+          text-align: center;
+        }
+      }
+      p {
+        text-align: center;
+      }
     }
   }
 
-  .sponsor-cards {
+  .sponsor-section {
+    .sponsor-block {
+      display: grid;
+      grid-template-rows: auto 1fr;
+      row-gap: 2rem;
+      margin-block: 2rem;
+
+      .section-title {
+        margin: 0;
+        font-size: clamp(1.9rem, -4.4rem + 11.2vw, 4rem);
+        font-synthesis: none;
+      }
+      .sponsor-cards {
+        position: relative;
+        display: grid;
+        margin-left: 5rem;
+
+        /*gap: 0.5rem;*/
+
+        .sponsor-card {
+          display: grid;
+          grid-template-rows: auto auto 1fr;
+          gap: 24px;
+          padding: 32px;
+          box-shadow: #dc0d40 4px 4px 10px 2px;
+          border-radius: 0.75rem;
+          width: 20rem;
+          /*height: 25rem;*/
+          background: rgba(255, 255, 255, 1);
+          /*backdrop-filter: blur(20px);
+          -webkit-backdrop-filter: blur(20px);
+          background: rgba(255, 255, 255, 0.05);*/
+
+          .sponsor-background {
+            position: absolute;
+            /*height: 15em;*/
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 1;
+            content: "";
+
+            /*background: linear-gradient(190deg, #c0c0c0, #dc0d4099);*/
+          }
+
+          .sponsor-name {
+            display: flex;
+            align-items: flex-end;
+            margin: 0;
+            font-family: "Bull", monospace;
+            font-size: 2rem;
+            font-weight: 700;
+            color: #dc0d40;
+            text-decoration: none;
+            z-index: 2;
+            gap: 0.2rem;
+
+            svg {
+              margin-bottom: 0.45rem;
+            }
+          }
+
+          .sponsor-desc {
+            margin: 0;
+            font-size: 1rem;
+            line-height: 1.4;
+            text-align: justify;
+            color: #555;
+            z-index: 2;
+          }
+          .sponsor-img {
+            width: 100%;
+            height: 120px;
+            object-fit: contain;
+            align-self: end;
+            justify-self: center;
+            z-index: 2;
+          }
+        }
+      }
+    }
+  }
+
+  /* mobile: 1 col */
+  @media (max-width: 900px) {
+    .sponsor-section .sponsor-block .sponsor-cards {
+      grid-template-columns: 1fr;
+      align-self: center;
+      justify-self: center;
+      margin: 0rem;
+    }
+
+    .sponsor-section .sponsor-block .section-title {
+      text-align: center;
+    }
+  }
+
+  /* desktop and up: 3 cols (max) */
+  @media (min-width: 1024px) {
+    .sponsor-cards {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  /*.sponsor-cards {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
     gap: 1.5rem;
@@ -109,7 +257,7 @@
       180deg,
       #c0c0c011,
       #e0e0e022
-    ); /* Silver gradient */
+    );
     border: 2px solid #c0c0c0;
   }
 
@@ -123,36 +271,7 @@
       180deg,
       #9b59b611,
       #d281f744
-    ); /* Bronze gradient */
+    );
     border: 2px solid #d281f7;
-  }
-
-  /* Tooltip style */
-  .tooltip {
-    position: absolute;
-    bottom: -60px; /* place below card */
-    left: 50%;
-    transform: translateX(-50%);
-    background: rgba(0, 0, 0, 0.85);
-    color: white;
-    padding: 0.75rem 1rem;
-    border-radius: 0.5rem;
-    font-size: 0.9rem;
-    max-width: 220px;
-    white-space: normal;
-    text-align: center;
-    z-index: 10;
-    animation: fadeIn 0.2s ease;
-  }
-
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: translate(-50%, -10px);
-    }
-    to {
-      opacity: 1;
-      transform: translate(-50%, 0);
-    }
-  }
+  }*/
 </style>

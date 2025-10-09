@@ -3,6 +3,7 @@
   import NavBar from "$lib/components/NavBar.svelte";
 
   let { children } = $props();
+  import "../app.css";
 </script>
 
 <svelte:head>

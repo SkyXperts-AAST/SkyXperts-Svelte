@@ -271,35 +271,6 @@
         justify-content: center;
         align-items: center;
 
-        /*&::before {
-          content: "";
-          position: absolute;
-          left: 0;
-          right: 0;
-          top: 10%;
-          height: 1rem;
-          background-color: #dc0d40;
-
-          mask-image: linear-gradient(
-            90deg,
-            rgba(0, 0, 0, 0) 0%,
-            rgba(0, 0, 0, 0.5) 30%,
-            rgba(0, 0, 0, 0) 42%,
-            rgba(0, 0, 0, 0) 50%,
-            rgba(0, 0, 0, 0) 58%,
-            rgba(0, 0, 0, 0.5) 70%,
-            rgba(0, 0, 0, 0) 100%
-          );
-        }*/
-
-        .line {
-          position: absolute;
-          width: 100%;
-          inset: 0;
-          background-size: cover;
-          background-position: center;
-        }
-
         label {
           color: #dc0d40;
           display: flex;
@@ -309,22 +280,6 @@
           font-size: clamp(2rem, -1rem + 5.3333vw, 3rem);
           text-transform: uppercase;
           cursor: pointer;
-
-          /*&::after {
-            content: "";
-            position: absolute;
-            pointer-events: none;
-            transform: translateY(80%);
-            width: 40px;
-            height: 40px;
-            background-image: url("data:image/svg+xml;utf8,\
-          <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%23dc0d40'>\
-          <path d='M5.64 7.64 10 12l4.36-4.36-1.41-1.41L10 9.17 7.05 6.23 5.64 7.64z'/>\
-          </svg>");
-            background-repeat: no-repeat;
-            background-size: 100% 100%;
-            opacity: 0.9;
-          }*/
         }
 
         label,
@@ -338,9 +293,10 @@
           color: white;
           appearance: none;
           border: none;
-          font-size: 5rem;
+          font-size: clamp(7rem, 1rem + 10.6667vw, 9rem);
           cursor: pointer;
-          margin-top: 1rem;
+          /*margin-top: 1rem;*/
+          line-height: initial;
         }
       }
 
@@ -354,7 +310,7 @@
         h2 {
           color: rgba(255, 255, 255, 0.8);
           font-variation-settings: "wght" 180;
-          font-size: clamp(2rem, -1rem + 5.3333vw, 3rem);
+          font-size: clamp(2rem, -7rem + 16vw, 5rem);
           margin: 1rem;
         }
 

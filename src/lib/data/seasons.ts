@@ -227,6 +227,10 @@ export const permanentRoster: SeasonMember[] = [
     personId: "abdelrahman-hikal",
     assignments: [{ subteam: "General", roles: ["Mentor"] }],
   },
+  {
+    personId: "yehia-sharawy",
+    assignments: [{ subteam: "General", roles: ["Mentor"] }],
+  },
 ];
 
 // Expand a season roster by pulling person info
