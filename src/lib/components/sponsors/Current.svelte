@@ -141,102 +141,83 @@
 
   .sponsor-section {
     z-index: 3;
-    .sponsor-block {
-      display: grid;
-      grid-template-rows: auto 1fr;
-      row-gap: 2rem;
-      margin-block: 2rem 0;
-      justify-content: center;
-
-      .section-title {
-        margin: 0;
-        font-size: clamp(1.9rem, -1.4rem + 5.8667vw, 3rem);
-        font-synthesis: none;
-        color: #dc0d40;
-        text-align: center;
-      }
-      .sponsor-cards {
-        position: relative;
-        display: grid;
-        /*margin-left: 5rem;*/
-        justify-items: center;
-        gap: 1.5rem;
-
-        .sponsor-card {
-          display: grid;
-          grid-template-rows: auto auto 1fr;
-          /*gap: 24px;*/
-          padding: 32px;
-          border-radius: 0.75rem;
-          width: 20rem;
-          /*height: 25rem;*/
-          background: rgba(255, 255, 255, 1);
-          box-shadow: rgba(0, 0, 0, 0.2) 0px 25px 20px -20px;
-
-          /*backdrop-filter: blur(20px);
-          -webkit-backdrop-filter: blur(20px);
-          background: rgba(255, 255, 255, 0.05);*/
-
-          .sponsor-background {
-            position: absolute;
-            /*height: 15em;*/
-            top: 0;
-            right: 0;
-            bottom: 0;
-            left: 0;
-            z-index: 1;
-            content: "";
-
-            /*background: linear-gradient(190deg, #c0c0c0, #dc0d4099);*/
-          }
-
-          .sponsor-name {
-            display: flex;
-            align-items: flex-end;
-            justify-content: center;
-            margin: 0;
-            font-family: "Bull", monospace;
-            font-size: 2rem;
-            font-weight: 700;
-            color: #dc0d40;
-            text-decoration: none;
-            z-index: 2;
-            gap: 0.2rem;
-
-            svg {
-              margin-bottom: 0.45rem;
-            }
-          }
-
-          .sponsor-desc {
-            margin: 0;
-            font-size: 1rem;
-            line-height: 1.4;
-            text-align: justify;
-            color: #555;
-            z-index: 2;
-          }
-          .sponsor-img {
-            width: 100%;
-            height: 120px;
-            object-fit: contain;
-            /*align-self: end;*/
-            justify-self: center;
-            z-index: 2;
-            /*position: absolute;*/
-            top: -4rem;
-          }
-        }
-      }
-      .center-flex {
-        display: flex;
-        justify-content: center;
-        gap: 1.5rem;
-      }
-    }
   }
 
-  /* mobile: 1 col */
+  .sponsor-section .sponsor-block {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    row-gap: 2rem;
+    margin-block: 2rem 0;
+    justify-content: center;
+  }
+
+  .sponsor-section .sponsor-block .section-title {
+    margin: 0;
+    font-size: clamp(1.9rem, -1.4rem + 5.8667vw, 3rem);
+    font-synthesis: none;
+    color: #dc0d40;
+    text-align: center;
+  }
+
+  .sponsor-section .sponsor-block .sponsor-cards {
+    position: relative;
+    display: grid;
+    justify-items: center;
+    gap: 1.5rem;
+  }
+
+  /* cards + children */
+  .sponsor-section .sponsor-block .sponsor-cards .sponsor-card {
+    display: grid;
+    grid-template-rows: auto auto 1fr;
+    padding: 32px;
+    border-radius: 0.75rem;
+    width: 20rem;
+    background: rgba(255, 255, 255, 1);
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 25px 20px -20px;
+    position: relative; /* for background pseudo if you use it */
+  }
+
+  .sponsor-section .sponsor-block .sponsor-cards .sponsor-card .sponsor-name {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    margin: 0;
+    font-family: "Bull", monospace;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #dc0d40;
+    text-decoration: none;
+    z-index: 2;
+    gap: 0.2rem;
+  }
+
+  .sponsor-section .sponsor-block .sponsor-cards .sponsor-card .sponsor-desc {
+    margin: 0;
+    font-size: 1rem;
+    line-height: 1.4;
+    text-align: justify;
+    color: #555;
+    z-index: 2;
+  }
+
+  .sponsor-section .sponsor-block .sponsor-cards .sponsor-card .sponsor-img {
+    width: 100%;
+    height: 120px;
+    object-fit: contain;
+    justify-self: center;
+    z-index: 2;
+    top: -4rem;
+  }
+
+  /* center-flex utility */
+  .sponsor-section .sponsor-block .sponsor-cards.center-flex {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+  }
+
+  /* mobile */
   @media (max-width: 900px) {
     .sponsor-section .sponsor-block .sponsor-cards {
       grid-template-columns: 1fr;
@@ -245,11 +226,11 @@
       margin: 0rem;
     }
 
+    /* ensure center-flex stacks on mobile */
     .sponsor-section .sponsor-block .sponsor-cards.center-flex {
       display: grid !important;
       grid-template-columns: 1fr;
-      justify-items: center; /* keep logos centered */
-      /*gap: 1.5rem; */
+      justify-items: center;
     }
 
     .sponsor-section .sponsor-block .section-title {
@@ -257,7 +238,7 @@
     }
   }
 
-  /* desktop and up: 3 cols (max) */
+  /* desktop */
   @media (min-width: 1024px) {
     .sponsor-cards {
       display: grid;
@@ -265,8 +246,10 @@
       justify-self: center;
       justify-content: center;
       margin-inline: auto;
+      gap: 1.5rem; /* keep the gap here too */
     }
 
+    /* center a single leftover */
     .sponsor-cards > .sponsor-card:last-child:nth-child(3n + 1) {
       grid-column: 2;
     }
