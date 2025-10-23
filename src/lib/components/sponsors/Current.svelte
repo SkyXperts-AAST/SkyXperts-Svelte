@@ -34,9 +34,7 @@
           </h2>
 
           <div
-            class="sponsor-cards {section.sponsors.length <= 2
-              ? 'center-flex'
-              : ''}"
+            class={`sponsor-cards ${section.sponsors.length <= 2 ? "center-flex" : ""}`}
           >
             {#each section.sponsors as sponsor, i}
               <article class="sponsor-card {sponsor.tier}">
