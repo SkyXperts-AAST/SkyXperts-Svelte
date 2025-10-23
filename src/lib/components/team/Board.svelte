@@ -14,6 +14,7 @@
       name: person.name ?? slot.personId,
       src: person.src ?? "",
       department: person?.department ?? "",
+      linkedin: person?.linkedin ?? "",
       personTags: person?.tags ?? [],
     };
   });
@@ -47,7 +48,7 @@
       return {
         name: member.name,
         image: member.src,
-        href: `/team/${member.personId}`,
+        href: member.linkedin,
         title: displayRole,
         tags: member.tags ?? member.personTags ?? [],
         subteam: leadershipSubteams, // use .join(", ") if ArcCarousel expects a string

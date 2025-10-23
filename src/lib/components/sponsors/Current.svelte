@@ -9,6 +9,7 @@
 </script>
 
 <main>
+  <!-- <div class="fade"></div> -->
   <span class="title">
     <div class="left">
       <h2>Special thanks to our sponsors</h2>
@@ -22,34 +23,38 @@
 
   <section class="sponsor-section">
     {#each sponsorSections as section}
-      <div class="sponsor-block">
-        <h2 class="section-title">
-          <span style="color:#dc0d40">❱ </span>{section.sectionTitle}<span
-            style="color:#dc0d40"
-          >
-            ❰</span
-          >
-        </h2>
+      {#if section.sponsors && section.sponsors.length > 0}
+        <div class="sponsor-block">
+          <h2 class="section-title">
+            <span style="color:#dc0d40">❱ </span>{section.sectionTitle}<span
+              style="color:#dc0d40"
+            >
+              ❰</span
+            >
+          </h2>
 
-        <div class="sponsor-cards">
-          {#each section.sponsors as sponsor}
-            <article class="sponsor-card {sponsor.tier}">
-              <div class="sponsor-background"></div>
-              <a class="sponsor-name" href={sponsor.link}
-                >{sponsor.name}<svg width="24" height="24" fill="currentColor"
-                  ><path
-                    d="M7 7h8.586L5.293 17.293l1.414 1.414L17 8.414V17h2V5H7v2z"
-                  /></svg
-                ></a
-              >
-              <p class="sponsor-desc">{sponsor.description}</p>
-              <img class="sponsor-img" src={sponsor.image} alt={sponsor.alt} />
-            </article>
-          {/each}
+          <div
+            class="sponsor-cards {section.sponsors.length <= 2
+              ? 'center-flex'
+              : ''}"
+          >
+            {#each section.sponsors as sponsor, i}
+              <article class="sponsor-card {sponsor.tier}">
+                <a class="sponsor-name" href={sponsor.link}
+                  ><img
+                    class="sponsor-img"
+                    src={sponsor.image}
+                    alt={sponsor.alt}
+                  /></a
+                >
+              </article>
+            {/each}
+          </div>
         </div>
-      </div>
+      {/if}
     {/each}
   </section>
+  <!-- <div class="fade"></div> -->
 </main>
 
 <style>
@@ -57,11 +62,34 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    /*align-items: center;*/
     min-height: 100svh;
     width: 100%;
     color: white;
-    padding: 0 5rem;
+    /*background-color: #f0f0f0;*/
+    position: relative;
+    margin-bottom: 4rem;
+  }
+
+  .fade {
+    position: absolute;
+    z-index: 2;
+    inset: 0;
+    pointer-events: none;
+
+    &:nth-child(1) {
+      background: linear-gradient(
+        0deg,
+        rgba(0, 26, 48, 0) 82.68%,
+        #00162b 100%
+      );
+    }
+    &:nth-child(4) {
+      background: linear-gradient(
+        180deg,
+        rgba(0, 26, 48, 0) 82.68%,
+        #00162b 100%
+      );
+    }
   }
 
   .title {
@@ -70,12 +98,13 @@
     align-items: center;
     justify-items: end;
     grid-template-columns: 1fr auto;
+    padding: 2rem 5rem;
+    z-index: 3;
 
     .left {
       display: flex;
       flex-direction: column;
       align-items: flex-start;
-      /*padding-left: 5rem;*/
       width: 100%;
 
       h2 {
@@ -83,11 +112,17 @@
         margin: 0;
         font-synthesis: none;
         line-height: initial;
+        /*color: #00162b;*/
+        /*color: #dc0d40;*/
+        color: white;
+        text-shadow: #00162b77 2px 2px 5px;
       }
     }
     p {
       color: rgba(255, 255, 255, 0.8);
       font-size: clamp(1.2rem, -0.3rem + 2.6667vw, 1.7rem);
+      /*color: #00162b;*/
+      text-shadow: #00162b77 2px 2px 10px;
     }
   }
   @media (max-width: 900px) {
@@ -107,34 +142,39 @@
   }
 
   .sponsor-section {
+    z-index: 3;
     .sponsor-block {
       display: grid;
       grid-template-rows: auto 1fr;
       row-gap: 2rem;
-      margin-block: 2rem;
+      margin-block: 2rem 0;
+      justify-content: center;
 
       .section-title {
         margin: 0;
-        font-size: clamp(1.9rem, -4.4rem + 11.2vw, 4rem);
+        font-size: clamp(1.9rem, -1.4rem + 5.8667vw, 3rem);
         font-synthesis: none;
+        color: #dc0d40;
+        text-align: center;
       }
       .sponsor-cards {
         position: relative;
         display: grid;
-        margin-left: 5rem;
-
-        /*gap: 0.5rem;*/
+        /*margin-left: 5rem;*/
+        justify-items: center;
+        gap: 1.5rem;
 
         .sponsor-card {
           display: grid;
           grid-template-rows: auto auto 1fr;
-          gap: 24px;
+          /*gap: 24px;*/
           padding: 32px;
-          box-shadow: #dc0d40 4px 4px 10px 2px;
           border-radius: 0.75rem;
           width: 20rem;
           /*height: 25rem;*/
           background: rgba(255, 255, 255, 1);
+          box-shadow: rgba(0, 0, 0, 0.2) 0px 25px 20px -20px;
+
           /*backdrop-filter: blur(20px);
           -webkit-backdrop-filter: blur(20px);
           background: rgba(255, 255, 255, 0.05);*/
@@ -155,6 +195,7 @@
           .sponsor-name {
             display: flex;
             align-items: flex-end;
+            justify-content: center;
             margin: 0;
             font-family: "Bull", monospace;
             font-size: 2rem;
@@ -181,11 +222,18 @@
             width: 100%;
             height: 120px;
             object-fit: contain;
-            align-self: end;
+            /*align-self: end;*/
             justify-self: center;
             z-index: 2;
+            /*position: absolute;*/
+            top: -4rem;
           }
         }
+      }
+      .center-flex {
+        display: flex;
+        justify-content: center;
+        gap: 1.5rem;
       }
     }
   }
@@ -199,6 +247,13 @@
       margin: 0rem;
     }
 
+    .sponsor-section .sponsor-block .sponsor-cards.center-flex {
+      display: grid !important;
+      grid-template-columns: 1fr;
+      justify-items: center; /* keep logos centered */
+      /*gap: 1.5rem; */
+    }
+
     .sponsor-section .sponsor-block .section-title {
       text-align: center;
     }
@@ -207,7 +262,15 @@
   /* desktop and up: 3 cols (max) */
   @media (min-width: 1024px) {
     .sponsor-cards {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      display: grid;
+      grid-template-columns: repeat(3, 20rem);
+      justify-self: center;
+      justify-content: center;
+      margin-inline: auto;
+    }
+
+    .sponsor-cards > .sponsor-card:last-child:nth-child(3n + 1) {
+      grid-column: 2;
     }
   }
 

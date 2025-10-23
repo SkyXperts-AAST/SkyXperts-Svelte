@@ -148,6 +148,7 @@ export const members: Person[] = [
     id: "yehia-sharawy",
     name: "Yehia Sharawy",
     department: "Computer Engineering",
+    linkedin: "https://linkedin.com/in/yehiasharawy/",
     src: YehiaSharawyImg,
   },
   {

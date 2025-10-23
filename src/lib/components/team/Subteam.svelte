@@ -69,12 +69,17 @@
   };
   const ceos = $derived(team.filter((m) => hasAnyRole(m, ["ceo"])));
   const ctos = $derived(team.filter((m) => hasAnyRole(m, ["cto"])));
+  const teamlead = $derived(team.filter((m) => hasAnyRole(m, ["team lead"])));
 
   const pickRole = (roles: Role[], preferred: Role[]) => {
     const lower = roles.map((t) => t.toLowerCase());
     const i = preferred.findIndex((p) => lower.includes(p.toLowerCase()));
     return i !== -1 ? preferred[i] : roles[0];
   };
+
+  const leftover = $derived(members.length % 3);
+  const hasTwoLeftovers = $derived(members.length >= 2 && leftover === 2);
+  const hasOneLeftover = $derived(members.length >= 1 && leftover === 1);
 </script>
 
 <section class="layout">
@@ -139,11 +144,33 @@
               </span>
             {/each}
           {/if}
+
+          {#if teamlead.length}
+            {#each teamlead as board}
+              <span class="member">
+                <div class="head-card">
+                  <img src={board.src || defaultImg} alt={board.name} />
+                </div>
+                <ul>
+                  <li>{board.name}</li>
+                  <li>
+                    {pickRole(
+                      board.assignments.flatMap((a) => a.roles),
+                      ["Team Lead"],
+                    )}
+                  </li>
+                  <li>{board.department}</li>
+                </ul>
+              </span>
+            {/each}
+          {/if}
         </div>
 
         <!-- Fallback if neither exists -->
-        {#if !ceos.length && !ctos.length}
-          <p class="board-empty">No CEO/CTO found for this subteam/season.</p>
+        {#if !ceos.length && !ctos.length && !teamlead.length}
+          <p class="board-empty">
+            No CEO/CTO/Team Lead found for this subteam/season.
+          </p>
         {/if}
       </div>
 
@@ -207,7 +234,11 @@
             </span>
           {/each}
         </div>
-        <div class="members-container">
+        <div
+          class="members-container"
+          class:two-leftovers={hasTwoLeftovers}
+          class:one-leftover={hasOneLeftover}
+        >
           <!-- Non-head members -->
           {#each members as member}
             <span class="member">
@@ -517,6 +548,37 @@
           margin-top: 0;
           row-gap: clamp(2rem, 3vw, 3rem);
         }
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .team-container .members-container {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(180px, 1fr));
+        gap: clamp(1.625rem, -8.5rem + 18vw, 5rem);
+        justify-content: center; /* center the 3-col grid block */
+        justify-items: center; /* center items in their cells */
+        width: 79%;
+        margin-inline: auto;
+      }
+
+      /* 1 leftover → center the single last item */
+      .team-container
+        .members-container
+        > .member:last-child:nth-child(3n + 1) {
+        grid-column: 2;
+      }
+
+      /* 2 leftovers → put them in cols 1 and 3 (gap centered) */
+      .team-container
+        .members-container
+        > .member:nth-last-child(2):nth-child(3n + 1) {
+        grid-column: 1; /* penultimate */
+      }
+      .team-container
+        .members-container
+        > .member:last-child:nth-child(3n + 2) {
+        grid-column: 3; /* last */
       }
     }
 

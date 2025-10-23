@@ -7,6 +7,7 @@ export type Role =
   | "Head"
   | "Co-Head"
   | "Member"
+  | "Team Lead"
   | "CTO"
   | "CEO";
 
@@ -132,13 +133,9 @@ export const seasons: Season[] = [
       {
         personId: "omar-ossama",
         assignments: [
-          { subteam: "General", roles: ["CEO"] },
+          { subteam: "General", roles: ["Team Lead"] },
           { subteam: "Electrical", roles: ["Head"] },
         ],
-      },
-      {
-        personId: "habiba-amr",
-        assignments: [{ subteam: "General", roles: ["CTO"] }],
       },
       {
         personId: "abdelrahman-hikal",
@@ -210,10 +207,7 @@ export const permanentRoster: SeasonMember[] = [
   },
   {
     personId: "aya-ashraf",
-    assignments: [
-      { subteam: "General", roles: ["Mentor"] },
-      { subteam: "Media", roles: ["Head"] },
-    ],
+    assignments: [{ subteam: "General", roles: ["Mentor"] }],
   },
   {
     personId: "moustafa-adly",
